@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useInView, useReducedMotion } from "motion/react";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { ProcessJourney } from "./ProcessJourney";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useState } from "react";
+import { SITE } from "@/lib/content";
+import styles from "./IndustriesCarousel.module.css";
 
 export type IndustryCard = { id: string; name: string; description: string; image?: string };
 
@@ -32,163 +33,112 @@ function Icon({ id, className }: { id: string; className?: string }) {
   );
 }
 
-/** How many cards are visible at once: 5 desktop, 3 tablet, 1 (with peeking neighbours) on phones. */
-function useVisible() {
-  const [visible, setVisible] = useState(5);
-  useEffect(() => {
-    const update = () => setVisible(window.innerWidth >= 1100 ? 5 : window.innerWidth >= 700 ? 3 : 1);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-  return visible;
+const PRIORITIES: Record<string, string[]> = {
+  "food-beverage": ["Shelf life", "Food safety", "Shelf appeal"],
+  fmcg: ["High volumes", "Consistency", "Speed to market"],
+  cosmetics: ["Brand expression", "Premium finishes", "Product protection"],
+  "retail-ecommerce": ["Transit protection", "Unboxing", "Brand recall"],
+  apparel: ["Brand identity", "Right-sized formats", "Presentation"],
+  "consumer-products": ["Shelf presence", "Everyday use", "Online delivery"],
+  electronics: ["Impact protection", "Secure transit", "Product fit"],
+  healthcare: ["Tamper evidence", "Product integrity", "Clear labelling"],
+  "industrial-products": ["Heavy-duty strength", "Freight handling", "Bulk formats"],
+  "export-businesses": ["Transit performance", "Shipping requirements", "Protection"],
+  "premium-brands": ["First impressions", "Fine finishes", "Brand experience"],
+  "d2c-startups": ["Unboxing", "Brand identity", "Room to scale"],
+};
+
+const IMAGE_POSITION: Record<string, string> = {
+  "premium-brands": "center 70%",
+  "d2c-startups": "center 55%",
+  cosmetics: "center 55%",
+};
+
+function Arrow({ direction = "diagonal" }: { direction?: "previous" | "next" | "diagonal" }) {
+  const path = direction === "previous" ? "M19 12H5m5-5-5 5 5 5" : direction === "next" ? "M5 12h14m-5-5 5 5-5 5" : "M6 18 18 6M6 6h12v12";
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={path} /></svg>;
 }
 
-const LAYOUT = {
-  5: { width: 19, step: 20.6, reach: 2 },
-  3: { width: 29, step: 31.5, reach: 1 },
-  1: { width: 66, step: 72, reach: 1 },
-} as const;
-
+/** An industry explorer with manual selection and no automatic content changes. */
 export function IndustriesCarousel({ cards }: { cards: IndustryCard[] }) {
-  const count = cards.length;
-  const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-  // Don't animate five blurred cards while the user is scrolling past other sections.
-  const onScreen = useInView(sectionRef, { margin: "100px 0px" });
+  const [activeId, setActiveId] = useState(cards[0]?.id ?? "");
   const reduceMotion = useReducedMotion();
-  const visible = useVisible();
-  const { width, step, reach } = LAYOUT[visible as 1 | 3 | 5];
-
-  const go = useCallback((delta: number) => setActive(a => (a + delta + count) % count), [count]);
-
-  useEffect(() => {
-    if (paused || reduceMotion || !onScreen) return;
-    const timer = setInterval(() => go(1), 4800);
-    return () => clearInterval(timer);
-  }, [paused, reduceMotion, onScreen, go]);
+  const index = Math.max(0, cards.findIndex(card => card.id === activeId));
+  const selected = cards[index];
+  if (!selected) return null;
 
   const pad = (n: number) => String(n).padStart(2, "0");
+  const go = (offset: number) => setActiveId(cards[(index + offset + cards.length) % cards.length].id);
+  const enquiry = `mailto:${SITE.email}?subject=${encodeURIComponent(`Packaging enquiry — ${selected.name}`)}`;
 
   return (
-    <section
-      ref={sectionRef}
-      id="industries"
-      aria-roledescription="carousel"
-      aria-labelledby="industries-title"
-      className="relative overflow-hidden bg-gold-lightest py-20 text-cocoa-umber md:py-28"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
-    >
-      {/* Soft window-light wash, echoing the warm warehouse photography. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(ellipse 60% 50% at 85% 10%, rgb(222 210 188 / .7), transparent 70%), radial-gradient(ellipse 50% 45% at 8% 90%, rgb(207 192 159 / .5), transparent 70%)", maskImage: "linear-gradient(to bottom, #000 75%, transparent)", WebkitMaskImage: "linear-gradient(to bottom, #000 75%, transparent)" }} />
-
-      <div className="relative mx-auto w-[calc(100%-40px)] max-w-[1280px] md:w-[calc(100%-96px)]">
+    <section id="industries" aria-labelledby="industries-title" className={styles.section}>
+      <div className={styles.container}>
         <motion.div
-          initial={{ opacity: 0, y: reduceMotion ? 0 : 24 }}
+          data-reveal
+          className={styles.heading}
+          initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8, ease: EASE }}
-          className="text-center"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: reduceMotion ? 0 : 0.8, ease: EASE }}
         >
-          <p className="mx-auto flex max-w-[420px] items-center gap-4 text-[12px] font-medium tracking-[.2em] text-cocoa-light">
-            <span className="h-px flex-1 bg-champagne-gold/70" />INDUSTRIES SERVED<span className="h-px flex-1 bg-champagne-gold/70" />
-          </p>
-          <h2 id="industries-title" className="mt-5 font-display text-[clamp(38px,5.4vw,68px)] font-semibold leading-[1.08] tracking-[-.045em]">
-            Industries We <span className="text-champagne-gold">Serve</span>
-          </h2>
-          <p className="mt-4 text-[16px] text-cocoa-light md:text-[18px]">Packaging solutions tailored for every industry.</p>
+          <div>
+            <p className={styles.eyebrow}><span aria-hidden="true" />INDUSTRIES SERVED</p>
+            <h2 id="industries-title" className={styles.title}>Industries We <span>Serve.</span></h2>
+          </div>
+          <div className={styles.intro}><p>Packaging solutions tailored<br />for every industry.</p><span>YOUR WORLD. OUR PACKAGING EXPERTISE.</span></div>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: reduceMotion ? 0 : 36 }}
+          data-reveal
+          className={styles.explorer}
+          initial={{ opacity: 0, y: reduceMotion ? 0 : 22 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
-          className="relative mt-12 md:mt-16"
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: reduceMotion ? 0 : 0.9, delay: reduceMotion ? 0 : 0.12, ease: EASE }}
         >
-          <div
-            className="relative h-[430px] touch-pan-y select-none md:h-[470px]"
-            role="group"
-            aria-label="Industries"
-          >
-            <motion.div className="absolute inset-0" onPanEnd={(_, info) => { if (Math.abs(info.offset.x) > 50) go(info.offset.x < 0 ? 1 : -1); }}>
-              {cards.map((card, i) => {
-                const offset = ((i - active + Math.floor(count / 2) + count) % count) - Math.floor(count / 2);
-                const shown = Math.abs(offset) <= reach;
-                const isActive = offset === 0;
-                return (
-                  <motion.article
-                    key={card.id}
-                    aria-hidden={!shown}
-                    aria-label={`${i + 1} of ${count}: ${card.name}`}
-                    initial={false}
-                    animate={{
-                      left: `${50 + offset * step}%`,
-                      scale: isActive ? 1 : 0.9,
-                      opacity: shown ? (isActive ? 1 : visible === 1 ? 0.55 : 0.92) : 0,
-                    }}
-                    transition={{ duration: reduceMotion ? 0 : 0.7, ease: EASE }}
-                    style={{ width: `${width}%`, x: "-50%", zIndex: 10 - Math.abs(offset), pointerEvents: shown ? "auto" : "none" }}
-                    onClick={() => shown && !isActive && setActive(i)}
-                    className={`absolute inset-y-0 flex flex-col overflow-hidden rounded-[20px] border bg-white/55 backdrop-blur-sm transition-[box-shadow,background-color,border-color] duration-500 ${isActive ? "border-gold-soft bg-white/85 shadow-[0_28px_60px_-24px_rgb(74_56_49/0.45)]" : "cursor-pointer border-gold-light shadow-[0_14px_34px_-22px_rgb(74_56_49/0.35)] hover:border-gold-soft"}`}
-                  >
-                    <div className="relative m-2.5 mb-0 basis-[54%] overflow-hidden rounded-[14px] bg-gradient-to-br from-gold-light via-gold-soft/70 to-gold-medium/60">
-                      {card.image ? (
-                        <Image src={card.image} alt={card.name} unoptimized={card.image.endsWith(".svg")} fill sizes="(max-width: 700px) 70vw, 22vw" className={`object-cover transition-transform duration-[1200ms] ease-out ${isActive ? "scale-105" : "scale-100"}`} />
-                      ) : (
-                        <Icon id={card.id} className="absolute left-1/2 top-1/2 size-[46%] -translate-x-1/2 -translate-y-1/2 text-cocoa-umber/25" />
-                      )}
-                    </div>
-                    <div className="flex flex-1 flex-col items-center px-4 pb-5 pt-4 text-center">
-                      <Icon id={card.id} className={`size-7 text-cocoa-umber transition-transform duration-500 ${isActive ? "-translate-y-0.5 scale-110" : ""}`} />
-                      <h3 className="mt-3 font-display text-[16px] font-semibold leading-tight tracking-[-.01em] md:text-[17px]">{card.name}</h3>
-                      <p className="mt-2 text-[13px] leading-[1.6] text-cocoa-light">{card.description}</p>
-                    </div>
-                  </motion.article>
-                );
-              })}
-            </motion.div>
+          <div className={styles.directory}>
+            <div className={styles.directoryHeading}><h3>Find your industry.</h3><span>{pad(index + 1)} <span>/ {pad(cards.length)}</span></span></div>
+            <p className={styles.directoryHint}>Different products. Different priorities. Select yours.</p>
+            <ul className={styles.sectorList} aria-label="Select an industry">
+              {cards.map((card, i) => <li key={card.id}>
+                <button type="button" className={styles.sector} aria-pressed={selected.id === card.id} aria-controls="industry-preview" onClick={() => setActiveId(card.id)}>
+                  <span className={styles.sectorNumber}>{pad(i + 1)}</span><span className={styles.sectorName}>{card.name}</span><span className={styles.sectorArrow}><Arrow /></span>
+                </button>
+              </li>)}
+            </ul>
+            <div className={styles.mobilePicker}>
+              <label htmlFor="industry-select">EXPLORE YOUR INDUSTRY</label>
+              <div className={styles.pickerControls}>
+                <div className={styles.selectWrap}><select id="industry-select" value={selected.id} onChange={event => setActiveId(event.target.value)} aria-controls="industry-preview">{cards.map((card, i) => <option value={card.id} key={card.id}>{pad(i + 1)} — {card.name}</option>)}</select><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" aria-hidden="true"><path d="m4 6 4 4 4-4" /></svg></div>
+                <button type="button" onClick={() => go(-1)} aria-label="Previous industry"><Arrow direction="previous" /></button>
+                <button type="button" onClick={() => go(1)} aria-label="Next industry"><Arrow direction="next" /></button>
+              </div>
+            </div>
+            <div className={styles.directoryFooter}><span className={styles.boxMark} aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="m16 3 12 7v13l-12 7-12-7V10l12-7Zm0 14 12-7M4 10l12 7v13M10 6.5l12 7v7" /></svg></span><p>Built around your product.<br /><span>Considered at every step.</span></p></div>
           </div>
 
-          {(["prev", "next"] as const).map(dir => (
-            <button
-              key={dir}
-              type="button"
-              onClick={() => go(dir === "next" ? 1 : -1)}
-              aria-label={dir === "next" ? "Next industry" : "Previous industry"}
-              className={`absolute top-[38%] z-20 grid size-11 place-items-center rounded-full border border-gold-light bg-white/90 text-cocoa-umber shadow-md transition hover:scale-110 hover:bg-white focus-visible:outline-2 focus-visible:outline-champagne-gold md:size-12 ${dir === "prev" ? "-left-2 md:-left-5" : "-right-2 md:-right-5"}`}
-            >
-              <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d={dir === "next" ? "m9 5 7 7-7 7" : "m15 5-7 7 7 7"} />
-              </svg>
-            </button>
-          ))}
+          <div id="industry-preview" role="region" aria-labelledby="industry-preview-title" className={styles.preview}>
+            <AnimatePresence initial={false}>
+              <motion.div key={selected.id} className={styles.imageLayer} initial={{ opacity: 0, scale: reduceMotion ? 1 : 1.04 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : 0.75, ease: EASE }} aria-hidden="true">
+                {selected.image ? <Image src={selected.image} alt="" fill sizes="(max-width: 900px) calc(100vw - 40px), 55vw" unoptimized={selected.image.endsWith(".svg")} className={styles.image} style={{ objectPosition: IMAGE_POSITION[selected.id] ?? "center" }} /> : <div className={styles.imageFallback}><Icon id={selected.id} /></div>}
+              </motion.div>
+            </AnimatePresence>
+            <div className={styles.shade} aria-hidden="true" />
+            <div className={styles.previewTop}><span className={styles.previewBadge}><Icon id={selected.id} />TAILORED TO YOUR WORLD</span><span className={styles.previewNumber}>{pad(index + 1)}<span> / {pad(cards.length)}</span></span></div>
+            <div className={styles.previewContent}>
+              <motion.div key={selected.id} initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 9 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.55, ease: EASE }}>
+                <h3 id="industry-preview-title" className={styles.previewTitle}>{selected.name}</h3>
+                <p className={styles.description}>{selected.description}</p>
+                <ul className={styles.priorities} aria-label="Packaging priorities">{(PRIORITIES[selected.id] ?? ["Product protection", "Brand presentation"]).map(priority => <li key={priority}>{priority}</li>)}</ul>
+              </motion.div>
+              <a href={enquiry} className={styles.previewLink} aria-label={`Discuss your packaging: ${selected.name}`}><span>Discuss your packaging</span><span className={styles.ctaArrow}><Arrow /></span></a>
+            </div>
+          </div>
         </motion.div>
 
-        <div className="mt-10 grid grid-cols-[1fr_auto_1fr] items-center gap-4">
-          <span aria-hidden="true" className="hidden h-px bg-gold-soft md:block" />
-          <div className="col-span-3 flex justify-center gap-2 md:col-span-1" role="tablist" aria-label="Choose industry">
-            {cards.map((card, i) => (
-              <button
-                key={card.id}
-                type="button"
-                role="tab"
-                aria-selected={i === active}
-                aria-label={card.name}
-                onClick={() => setActive(i)}
-                className={`h-2 rounded-full transition-all duration-500 ${i === active ? "w-7 bg-champagne-gold" : "w-2 bg-gold-soft/70 hover:bg-gold-soft"}`}
-              />
-            ))}
-          </div>
-          <div className="hidden items-center gap-4 md:flex">
-            <span aria-hidden="true" className="h-px flex-1 bg-gold-soft" />
-            <span className="text-[13px] tabular-nums tracking-[.1em] text-cocoa-light" aria-live="polite">{pad(active + 1)} / {pad(count)}</span>
-          </div>
-        </div>
+        <div className={styles.footer}><p><span className={styles.footerDot} aria-hidden="true" />From everyday essentials to extraordinary brands.</p><a href="#enquire">Let’s find your fit<Arrow /></a></div>
+        <p className={styles.srOnly} role="status" aria-atomic="true">{selected.name} selected.</p>
       </div>
     </section>
   );

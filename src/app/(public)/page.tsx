@@ -1,6 +1,7 @@
 import { getImageProps } from "next/image";
 import { IndustriesDirectory } from "@/components/sections/IndustriesDirectory";
 import { IndustriesServed } from "@/components/sections/IndustriesServed";
+import { FeaturedProducts } from "@/components/sections/FeaturedProducts";
 import { ProcessJourney } from "@/components/sections/ProcessJourney";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { SITE } from "@/lib/content";
@@ -62,6 +63,8 @@ export default function Page() {
       <IndustriesDirectory />
 
       <ProcessJourney />
+
+      <FeaturedProducts />
 
       <section className="roofer-section roofer-faq"><div className="roofer-container roofer-split"><div><p className="roofer-eyebrow">A LITTLE MORE CLARITY</p><h2>Good questions.<br />Straight answers.</h2><p className="roofer-intro">Every packaging project is different. Here are a few things to know before we get started.</p><a className="roofer-text-link" href={`mailto:${SITE.email}`}>Ask Us Something Else <span aria-hidden="true">↗</span></a></div><div>{faqs.map(([question, answer], index) => <details className="roofer-faq-item" key={question} open={index === 0}><summary>{question}<span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div></div></section>
 
