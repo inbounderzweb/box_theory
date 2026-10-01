@@ -1,0 +1,509 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens — Box Theory brand system: premium editorial / industrial
+   luxury. Espresso anchors the dark surfaces, ivory is the dominant light
+   background, champagne gold is used sparingly for emphasis only.
+--------------------------------------------------------------------------- */
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand palette */
+  --color-cocoa-umber: #4a3831;
+  --color-champagne-gold: #b99a60;
+
+  --color-cocoa-light: #6b5d56;
+  --color-cocoa-muted: #8b817d;
+  --color-cocoa-lightest: #d3d0cf;
+
+  --color-gold-lightest: #f1ebdf;
+  --color-gold-light: #ded2bc;
+  --color-gold-soft: #cfc09f;
+  --color-gold-medium: #c3ac7f;
+
+  --color-white: #ffffff;
+
+  /* Legacy aliases — existing components keep using these names, now
+     resolved to the palette above. */
+  --color-espresso: var(--color-cocoa-umber);
+  --color-espresso-light: var(--color-cocoa-light);
+  --color-champagne: var(--color-champagne-gold);
+  --color-champagne-light: var(--color-gold-medium);
+  --color-ivory: var(--color-gold-lightest);
+  --color-sand: var(--color-gold-light);
+  --color-copper: var(--color-cocoa-light);
+  --color-gold: var(--color-champagne-gold);
+  --color-rust: var(--color-cocoa-umber);
+
+  /* Text on ivory/white surfaces */
+  --color-ink: var(--color-cocoa-umber);
+  --color-muted: var(--color-cocoa-muted);
+
+  /* Hairlines */
+  --color-line: var(--color-gold-light);
+  --color-line-dark: rgb(241 235 223 / 0.14);
+
+  /* Layout */
+  --container-content: 1280px;
+  --container-wide: 1440px;
+
+  /* Motion */
+  --animate-marquee: marquee 60s linear infinite;
+  --animate-marquee-reverse: marquee-reverse 60s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-reverse {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-ivory);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    overflow-x: clip;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-champagne);
+    outline-offset: 3px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Typography scale — fluid, display uses the grotesk face, tight tracking.
+--------------------------------------------------------------------------- */
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .label {
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* Hero display type: ~80-120px desktop down to a legible mobile size. */
+  .display-hero {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.75rem, 3.2vw + 2rem, 7.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+  }
+
+  /* Major section headings: 48-72px. */
+  .display-heading {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.25rem, 1.6vw + 1.75rem, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  /* Supporting headings: 20-28px. */
+  .display-subheading {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.25rem, 0.6vw + 1.1rem, 1.75rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* The one saturated color moment: a gold→rust diagonal used sparingly on
+     headline accents, number chips, and primary CTAs — everywhere else stays
+     flat espresso/ivory/champagne. */
+  .text-gradient-gold {
+    background-image: linear-gradient(100deg, var(--color-gold-light), var(--color-gold) 45%, var(--color-rust));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .bg-gradient-gold {
+    background-image: linear-gradient(115deg, var(--color-gold-light), var(--color-gold) 55%, var(--color-rust));
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Blog post body — the stored Tiptap HTML, styled to the Box Theory brand
+   rather than through a prose plugin, so the pieces the editor actually
+   emits (headings, lists, images, blockquotes, tables) carry brand values.
+--------------------------------------------------------------------------- */
+@layer components {
+  .blog-prose {
+    color: var(--color-muted);
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .blog-prose > :first-child {
+    margin-top: 0;
+  }
+
+  .blog-prose > :last-child {
+    margin-bottom: 0;
+  }
+
+  .blog-prose p,
+  .blog-prose ul,
+  .blog-prose ol,
+  .blog-prose table,
+  .blog-prose pre {
+    margin-bottom: 20px;
+  }
+
+  .blog-prose h1,
+  .blog-prose h2,
+  .blog-prose h3,
+  .blog-prose h4,
+  .blog-prose h5,
+  .blog-prose h6 {
+    font-family: var(--font-display);
+    color: var(--color-espresso);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+
+  .blog-prose h1,
+  .blog-prose h2 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.25;
+  }
+
+  .blog-prose h3 {
+    font-size: clamp(1.5rem, 2.4vw, 2.125rem);
+    line-height: 1.29;
+  }
+
+  .blog-prose h4 {
+    font-size: clamp(1.375rem, 2vw, 1.75rem);
+    line-height: 1.36;
+  }
+
+  .blog-prose h5 {
+    font-size: 1.5rem;
+    line-height: 1.42;
+  }
+
+  .blog-prose h6 {
+    font-size: 1.25rem;
+    line-height: 1.5;
+  }
+
+  .blog-prose a {
+    color: var(--color-copper);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .blog-prose a:hover {
+    color: var(--color-champagne);
+  }
+
+  .blog-prose strong {
+    color: var(--color-espresso);
+    font-weight: 600;
+  }
+
+  .blog-prose ul,
+  .blog-prose ol {
+    padding-left: 1.25rem;
+  }
+
+  .blog-prose ul {
+    list-style: disc;
+  }
+
+  .blog-prose ol {
+    list-style: decimal;
+  }
+
+  .blog-prose li {
+    margin-bottom: 10px;
+  }
+
+  .blog-prose li::marker {
+    color: var(--color-champagne);
+  }
+
+  .blog-prose img {
+    display: block;
+    height: auto;
+    margin: 30px 0;
+    max-width: 100%;
+  }
+
+  .blog-prose figure {
+    margin: 30px 0;
+  }
+
+  .blog-prose figcaption {
+    font-size: 14px;
+    line-height: 22px;
+    margin-top: 12px;
+    text-align: center;
+    color: var(--color-muted);
+  }
+
+  .blog-prose blockquote {
+    background: var(--color-sand);
+    border-left: 2px solid var(--color-champagne);
+    color: var(--color-espresso);
+    font-size: 18px;
+    line-height: 28px;
+    margin: 30px 0;
+    overflow: hidden;
+    padding: 30px;
+    position: relative;
+  }
+
+  .blog-prose blockquote::after {
+    bottom: -10px;
+    color: var(--color-champagne);
+    content: "\201D";
+    font-family: var(--font-display);
+    font-size: 100px;
+    line-height: 1;
+    opacity: 0.25;
+    pointer-events: none;
+    position: absolute;
+    right: 24px;
+  }
+
+  .blog-prose blockquote p:last-child {
+    margin-bottom: 0;
+  }
+
+  .blog-prose blockquote cite,
+  .blog-prose blockquote > span {
+    display: block;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    margin-top: 20px;
+    text-decoration: underline;
+    text-transform: uppercase;
+  }
+
+  .blog-prose hr {
+    border-color: var(--color-line);
+    margin: 40px 0;
+  }
+
+  .blog-prose table {
+    border-collapse: collapse;
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  .blog-prose th,
+  .blog-prose td {
+    border: 1px solid var(--color-line);
+    padding: 10px 14px;
+    text-align: left;
+  }
+
+  .blog-prose th {
+    background: var(--color-sand);
+    color: var(--color-espresso);
+    font-weight: 600;
+  }
+
+  .blog-prose code {
+    background: var(--color-sand);
+    color: var(--color-copper);
+    font-size: 0.9em;
+    padding: 2px 6px;
+  }
+
+  .blog-prose pre {
+    background: var(--color-espresso);
+    color: #fff;
+    overflow-x: auto;
+    padding: 20px;
+  }
+
+  .blog-prose pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .blog-prose blockquote {
+      font-size: 20px;
+      line-height: 30px;
+      padding: 40px 140px 40px 40px;
+    }
+  }
+}
+
+/* Roofer-inspired public marketing layout. Scoped away from the admin UI. */
+.roofer-home, .roofer-header { --roofer-cream: #f1ebdf; --roofer-amber: #b99a60; --roofer-ink: #4a3831; color: var(--roofer-ink); }
+.roofer-container { width: min(1280px, calc(100% - 96px)); margin-inline: auto; }
+.roofer-header { position: relative; z-index: 40; background: #f1ebdf; border-bottom: 1px solid #4a383112; }
+.roofer-nav { min-height: 104px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+.roofer-desktop-nav { display: flex; gap: 22px; align-items: center; }
+.roofer-desktop-nav a { font-size: 13px; font-weight: 500; transition: color .2s; }
+.roofer-desktop-nav a:hover, .roofer-desktop-nav a[aria-current="page"] { color: #4a3831; }
+.roofer-button { display: inline-flex; align-items: center; justify-content: center; gap: 24px; padding: 19px 25px; background: #b99a60; color: #4a3831; border-radius: 6px; font-size: 14px; font-weight: 600; line-height: 1.4; transition: background .2s, transform .2s; }
+.roofer-button:hover { background: #c3ac7f; transform: translateY(-2px); }
+.roofer-button span, .roofer-text-link span { font-size: 21px; }
+.roofer-nav-cta { font-size: 12px; padding: 15px 18px; gap: 12px; white-space: nowrap; }
+.roofer-menu-toggle { display: none; width: 44px; height: 44px; cursor: pointer; font-size: 25px; }
+.roofer-mobile-nav { display: none; }
+.roofer-skip { position: absolute; left: 20px; top: -100px; background: white; padding: 12px; }
+.roofer-skip:focus { top: 10px; z-index: 50; }
+.roofer-hero { position: relative; isolation: isolate; background: #4a3831; overflow: hidden; color: white; min-height: min(100svh, 860px); display: flex; align-items: flex-end; }
+.roofer-hero > picture { position: absolute; inset: 0; z-index: -2; }
+.roofer-hero-image { width: 100%; height: 100%; object-fit: cover; object-position: 72% center; }
+.roofer-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 34% 46% at 20% 68%, #4a3831b8 0%, #4a383100 100%), radial-gradient(ellipse 20% 26% at 9% 92%, #4a38319e 0%, #4a383100 100%), radial-gradient(ellipse 18% 24% at 36% 58%, #4a383166 0%, #4a383100 100%), radial-gradient(ellipse 16% 20% at 28% 90%, #4a383173 0%, #4a383100 100%); filter: blur(14px); }
+.roofer-hero-content, .roofer-header-text { text-shadow: 0 1px 14px #4a383180; }
+.roofer-hero-content { padding-block: 170px 74px; }
+.roofer-eyebrow { font-size: 11px; letter-spacing: .16em; font-weight: 600; margin-bottom: 23px; display: flex; gap: 10px; align-items: center; }
+.roofer-eyebrow > span { width: 7px; height: 7px; border-radius: 50%; background: #b99a60; }
+.roofer-hero .roofer-eyebrow { color: #f1ebdf; }
+.roofer-home h1, .roofer-home h2, .roofer-home h3 { font-family: var(--font-display); font-weight: 600; }
+.roofer-home h1 { font-size: clamp(54px, 6.5vw, 96px); letter-spacing: -.055em; line-height: 1.06; max-width: 850px; }
+.roofer-hero-copy { max-width: 530px; font-size: 17px; line-height: 1.8; color: #f1ebdf; margin-top: 28px; }
+.roofer-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 28px; margin-top: 34px; }
+.roofer-text-link { display: inline-flex; align-items: center; gap: 15px; font-size: 14px; font-weight: 600; text-decoration: underline; text-underline-offset: 6px; }
+.roofer-text-link:hover { color: #b99a60; }
+.roofer-hero .roofer-text-link:hover { color: #c3ac7f; }
+.roofer-hero-note { display: flex; gap: 14px; align-items: center; margin-top: 47px; font-size: 14px; font-weight: 600; }
+.roofer-note-icon { width: 46px; height: 46px; padding: 8px; border: 1px solid #ffffff60; border-radius: 50%; color: #b99a60; }
+.roofer-hero-note small { display: block; font-size: 11px; font-weight: 400; color: #d3d0cf; margin-top: 5px; }
+.roofer-hero-caption { position: absolute; right: 30px; bottom: 35px; writing-mode: vertical-rl; letter-spacing: .2em; font-size: 9px; color: #ffffffb0; }
+/* Sections after the pinned Why Choose Us image must be opaque and stacked above it so they scroll over it. */
+:where(.roofer-home > section:not(#why-choose-us)) { position: relative; z-index: 1; background: #f1ebdf; }
+
+/* Branding marquee — two identical groups scroll by -50% for a seamless loop. */
+.roofer-marquee { background: #4a3831; color: #f1ebdf; overflow: hidden; border-top: 1px solid #b99a6040; padding-block: 18px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.roofer-marquee-track { display: flex; width: max-content; animation: marquee 38s linear infinite; will-change: transform; }
+.roofer-marquee:hover .roofer-marquee-track { animation-play-state: paused; }
+.roofer-marquee-group { display: flex; flex-shrink: 0; align-items: center; margin: 0; padding: 0; list-style: none; }
+.roofer-marquee-group li { display: flex; align-items: center; gap: 14px; padding-inline: 28px; font-family: var(--font-display); font-size: 14px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; transition: color .25s; }
+.roofer-marquee-group li:hover { color: #cfc09f; }
+.roofer-marquee-group li svg { width: 18px; height: 18px; color: #b99a60; flex-shrink: 0; transition: transform .6s cubic-bezier(.22, 1, .36, 1); }
+.roofer-marquee-group li:hover svg { transform: rotate(180deg) scale(1.15); }
+@media (max-width: 640px) { .roofer-marquee { padding-block: 14px; } .roofer-marquee-group li { font-size: 12px; padding-inline: 20px; } .roofer-marquee-track { animation-duration: 28s; } }
+@media (prefers-reduced-motion: reduce) { .roofer-marquee-track { animation: none; overflow-x: auto; } }
+.roofer-industries { border-bottom: 1px solid #ded2bc; background: #f1ebdf; }
+.roofer-industries > div { display: flex; align-items: center; gap: 50px; padding-block: 34px; }
+.roofer-industries p { flex-shrink: 0; font-size: 10px; line-height: 1.8; letter-spacing: .12em; }
+.roofer-industries > div > div { flex: 1; display: flex; justify-content: space-between; gap: 25px; flex-wrap: wrap; }
+.roofer-industries span { font-family: var(--font-display); font-size: 17px; font-weight: 600; color: #6b5d56; }
+.roofer-section { padding-block: 106px; }
+.roofer-cream { background: #f1ebdf; }
+.roofer-split { display: grid; grid-template-columns: 1fr 1fr; gap: 84px; align-items: center; }
+.roofer-home h2 { font-size: clamp(34px, 3.5vw, 52px); line-height: 1.14; letter-spacing: -.045em; }
+.roofer-home h3 { font-size: 22px; line-height: 1.3; letter-spacing: -.025em; }
+.roofer-intro { font-size: 15px; line-height: 1.85; color: #6b5d56; margin-block: 23px 28px; }
+.roofer-about-art { position: relative; min-height: 540px; border-radius: 12px; overflow: hidden; background: #6b5d56; }
+.roofer-about-art > img { object-fit: cover; object-position: 75% center; filter: saturate(.4); }
+.roofer-image-label { position: absolute; inset: auto 24px 24px; display: flex; align-items: center; gap: 18px; padding: 24px; background: #f1ebdf; border-radius: 7px; font-size: 14px; line-height: 1.8; }
+.roofer-image-label svg { width: 42px; color: #4a3831; }
+.roofer-check-list { display: grid; gap: 23px; margin-block: 30px; }
+.roofer-check-list li { display: flex; gap: 14px; }
+.roofer-check-list li > span { display: grid; place-items: center; background: #b99a60; border-radius: 50%; width: 23px; height: 23px; flex-shrink: 0; font-size: 12px; margin-top: 3px; }
+.roofer-check-list p { color: #6b5d56; font-size: 14px; line-height: 1.8; }
+.roofer-check-list strong { color: #4a3831; display: block; font-size: 15px; }
+.roofer-services { padding-top: 0; }
+.roofer-section-heading { display: flex; justify-content: space-between; align-items: end; gap: 50px; margin-bottom: 46px; }
+.roofer-section-heading > p { max-width: 350px; font-size: 15px; line-height: 1.85; color: #6b5d56; }
+.roofer-service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.roofer-service-card { border: 1px solid #ded2bc; background: #ffffff60; padding: 30px; border-radius: 9px; transition: background .2s, border-color .2s, transform .2s; }
+.roofer-service-card:hover { background: white; border-color: #b99a60; transform: translateY(-4px); }
+.roofer-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.roofer-service-icon { width: 56px; height: 56px; padding: 11px; border-radius: 50%; background: #ded2bc; }
+.roofer-card-arrow { font-size: 25px; color: #8b817d; }
+.roofer-service-card p { font-size: 14px; line-height: 1.85; color: #6b5d56; margin-top: 15px; }
+.roofer-card-number { display: block; font-size: 9px; letter-spacing: .14em; color: #8b817d; margin-top: 30px; }
+.roofer-solutions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.roofer-solution > div { border-radius: 9px; overflow: hidden; margin-bottom: 24px; background: #f1ebdf; }
+.roofer-solution img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform .3s; }
+.roofer-solution:hover img { transform: scale(1.04); }
+.roofer-solution p { color: #6b5d56; font-size: 14px; line-height: 1.8; margin-top: 12px; }
+.roofer-solutions-note { margin-top: 36px; border-top: 1px solid #ded2bc; padding-top: 24px; color: #6b5d56; font-size: 13px; }
+.roofer-process { background: #f1ebdf; }
+.roofer-process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 38px 55px; }
+.roofer-process-grid article { border-top: 1px solid #ded2bc; padding-top: 25px; }
+.roofer-process-grid article > span { display: inline-grid; place-items: center; width: 40px; height: 40px; background: #b99a60; border-radius: 50%; font-size: 13px; margin-bottom: 19px; }
+.roofer-process-grid p { color: #6b5d56; line-height: 1.8; font-size: 14px; margin-top: 12px; }
+.roofer-faq .roofer-split { align-items: start; }
+.roofer-faq-item { border-bottom: 1px solid #ded2bc; }
+.roofer-faq-item summary { display: flex; justify-content: space-between; align-items: center; gap: 25px; padding-block: 23px; cursor: pointer; font-size: 15px; font-weight: 600; list-style: none; }
+.roofer-faq-item summary::-webkit-details-marker { display: none; }
+.roofer-faq-item summary span { font-size: 24px; font-weight: 400; transition: transform .2s; }
+.roofer-faq-item[open] summary span { transform: rotate(45deg); }
+.roofer-faq-item p { font-size: 14px; line-height: 1.85; color: #6b5d56; padding-bottom: 24px; }
+.roofer-enquiry { background: #4a3831; color: white; padding-block: 76px; scroll-margin-top: 24px; }
+.roofer-enquiry > div { display: flex; gap: 50px; align-items: center; justify-content: space-between; }
+.roofer-enquiry h2 { font-size: clamp(32px, 3.5vw, 48px); }
+.roofer-enquiry p:not(.roofer-eyebrow) { color: #d3d0cf; margin-top: 22px; font-size: 14px; line-height: 1.8; }
+.roofer-enquiry-actions { display: flex; flex-shrink: 0; flex-direction: column; align-items: center; gap: 20px; }
+.roofer-enquiry-actions > a:last-child { font-size: 13px; }
+@media (min-width: 1600px) { .roofer-hero-content { padding-block: 190px 95px; } }
+@media (max-width: 1200px) { .roofer-desktop-nav { gap: 15px; } .roofer-nav-cta { display: none; } .roofer-split { gap: 45px; } }
+@media (max-width: 900px) { .roofer-container { width: calc(100% - 48px); } .roofer-desktop-nav { display: none; } .roofer-menu-toggle { display: block; } .roofer-nav { min-height: 80px; } .roofer-mobile-nav { display: flex; flex-direction: column; padding: 8px 24px 24px; gap: 4px; } .roofer-mobile-nav > a:not(.roofer-button) { padding: 12px 0; display: flex; justify-content: space-between; border-bottom: 1px solid #ded2bc; } .roofer-mobile-nav .roofer-button { margin-top: 14px; } .roofer-hero-content { padding-block: 72px; } .roofer-hero-caption { display: none; } .roofer-industries > div { gap: 30px; } .roofer-industries span { font-size: 14px; } .roofer-section { padding-block: 72px; } .roofer-services { padding-top: 0; } .roofer-split { gap: 40px; } .roofer-about-art { min-height: 510px; } .roofer-service-grid { grid-template-columns: repeat(2, 1fr); } .roofer-section-heading { gap: 30px; } .roofer-section-heading > p { max-width: 280px; } .roofer-solutions-grid { gap: 18px; } .roofer-enquiry > div { flex-direction: column; align-items: start; } }
+@media (max-width: 640px) { .roofer-container { width: calc(100% - 40px); } .roofer-hero { min-height: 100svh; } .roofer-hero-content { padding-block: 130px 48px; } .roofer-hero-image { object-position: 62% center; } .roofer-hero::after { background: radial-gradient(ellipse 85% 34% at 35% 82%, #4a3831c7 0%, #4a383100 100%), radial-gradient(ellipse 55% 22% at 20% 60%, #4a383180 0%, #4a383100 100%), radial-gradient(ellipse 45% 18% at 75% 94%, #4a383199 0%, #4a383100 100%); } .roofer-home h1 { font-size: clamp(44px, 11.5vw, 66px); } .roofer-hero-copy { font-size: 15px; } .roofer-eyebrow { font-size: 9px; letter-spacing: .12em; } .roofer-actions { gap: 23px; } .roofer-hero-note { margin-top: 36px; } .roofer-industries > div { flex-direction: column; align-items: start; gap: 20px; } .roofer-industries p br { display: none; } .roofer-industries strong { margin-left: 5px; } .roofer-industries > div > div { gap: 17px 25px; justify-content: start; } .roofer-split, .roofer-service-grid, .roofer-solutions-grid { grid-template-columns: 1fr; } .roofer-about-art { min-height: 360px; } .roofer-image-label { inset: auto 16px 16px; padding: 18px; } .roofer-section { padding-block: 58px; } .roofer-services { padding-top: 0; } .roofer-section-heading { flex-direction: column; align-items: start; gap: 22px; margin-bottom: 30px; } .roofer-section-heading > p { max-width: none; } .roofer-service-card { padding: 25px; } .roofer-solutions-grid { gap: 32px; } .roofer-process-grid { grid-template-columns: 1fr 1fr; gap: 30px 24px; } .roofer-process-grid h3 { font-size: 20px; } .roofer-process-grid p { font-size: 13px; } .roofer-enquiry { padding-block: 54px; } .roofer-enquiry-actions { align-items: start; } }
+
+.roofer-footer { background: #4a3831; }
+.roofer-footer > div { max-width: 1280px; }
+
+@keyframes process-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }

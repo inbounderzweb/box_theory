@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="48 30 330 270" preserveAspectRatio="xMidYMax slice">
+<defs>
+<linearGradient id="w3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1ebdf"/><stop offset="1" stop-color="#ded2bc"/></linearGradient>
+<linearGradient id="f3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfc09f"/><stop offset="1" stop-color="#c3ac7f"/></linearGradient>
+<linearGradient id="l3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".55"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+</defs>
+<rect width="400" height="300" fill="url(#w3)"/>
+<path d="M250 0H330L190 235H110Z" fill="url(#l3)"/><path d="M335 0H370L240 235H205Z" fill="url(#l3)" opacity=".6"/>
+<rect y="232" width="400" height="68" fill="url(#f3)"/><rect y="232" width="400" height="2" fill="#ffffff" opacity=".5"/>
+<ellipse cx="60" cy="262" rx="120" ry="14" fill="#ffffff" opacity=".18"/>
+<g transform="translate(215 234) scale(.74) translate(-215 -234)"><path d="M96 170L76 130H176L184 170Z" fill="#a98a57"/><path d="M176 170L184 130L226 118L222 160Z" fill="#a98a57" opacity=".7"/><g><ellipse cx="179.0" cy="236" rx="116.6" ry="15.158" fill="#4a3831" opacity=".16"/><path d="M96 170L132 150.2H262L226 170Z" fill="#c9a971"/><rect x="96" y="170" width="130" height="64" fill="#dcc293"/><path d="M226 170L262 150.2V214.2L226 234Z" fill="#a98a57"/></g><path d="M104 170q30-22 60-6t60-8l-6 14H110Z" fill="#ffffff" opacity=".9"/><path d="M120 168q20-14 38-4" stroke="#b99a60" stroke-width="3" fill="none"/><ellipse cx="303.04" cy="236" rx="39.199999999999996" ry="5.095999999999999" fill="#4a3831" opacity=".16"/><path d="M285.68 140 Q298.0 113.67999999999999 310.32 140" stroke="#6b5d56" stroke-width="2.5" fill="none" stroke-linecap="round"/><rect x="270" y="140" width="56" height="94" fill="#4a3831"/><path d="M326 140L336.08 142.2176V230.6736L326 234Z" fill="#4a3831" opacity=".22"/><circle cx="285.68" cy="147" r="2.2" fill="#f1ebdf"/><circle cx="310.32" cy="147" r="2.2" fill="#f1ebdf"/><rect x="282" y="180" width="32" height="3" fill="#b99a60"/><path d="M298 198L304.96 202.0V210.0L298 214L291.04 210.0V202.0Z" fill="none" stroke="#b99a60" stroke-width="2"/><path d="M291.04 202.0L298 206L304.96 202.0M298 206V214" stroke="#b99a60" stroke-width="2" fill="none"/><circle cx="352" cy="214" r="18" fill="#ffffff" opacity=".85"/><circle cx="352" cy="214" r="9" fill="#c9a971"/><circle cx="352" cy="214" r="18" fill="none" stroke="#b99a60" stroke-width="2"/></g>
+</svg>
