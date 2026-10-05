@@ -1,0 +1,62 @@
+.component { position: relative; width: 100%; }
+.scene { position: relative; width: 100%; aspect-ratio: 680 / 640; perspective: 1200px; perspective-origin: 50% 44%; }
+/* Only hinge wrappers preserve 3D. Cropping and paint live on their inner faces. */
+.world, .leftHinge, .rearHinge, .rightHinge, .lidTop, .lidBottom { position: absolute; transform-style: preserve-3d; }
+.world { left: 55.147059%; top: 26.5625%; width: 25%; height: 45.3125%; transform-origin: 50% 50%; animation: settle 4.6s cubic-bezier(.4, 0, .2, 1) both; }
+.face, .backFace, .closedPrint { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.face { overflow: hidden; background: #c9aa78; box-shadow: 0 5px 18px #4a38310a; }
+.face > svg { display: block; width: 100%; height: 100%; }
+.backFace { background: linear-gradient(110deg, #dbc79f, #bd9a62); transform: rotateY(180deg); }
+.closedPrint { background: linear-gradient(110deg, #e1c79b, #cca56d); color: #61472e; animation: revealPrint 4.6s ease both; }
+.closedPrint > svg { width: 100%; height: 100%; }
+.leftHinge { right: 100%; top: 0; width: 76.470588%; height: 100%; transform-origin: right center; animation: openLeft 4.6s cubic-bezier(.4, 0, .2, 1) both; }
+.rearHinge { right: 100%; top: 0; width: 134.615385%; height: 100%; transform-origin: right center; animation: openRear 4.6s cubic-bezier(.4, 0, .2, 1) both; }
+.rightHinge { left: 100%; top: 0; width: 61.764706%; height: 100%; transform-origin: left center; animation: openRight 4.6s cubic-bezier(.4, 0, .2, 1) both; }
+.lidTop { bottom: 100%; left: 0; width: 100%; height: 37.241379%; transform-origin: center bottom; animation: openTop 4.6s cubic-bezier(.4, 0, .2, 1) both; }
+.lidBottom { top: 100%; left: 0; width: 100%; height: 35.172414%; transform-origin: center top; animation: openBottom 4.6s cubic-bezier(.4, 0, .2, 1) both; }
+.lidSurface { position: absolute; inset: 0; background: #ded2bc; border: 1px solid #c8b38a; }
+.topTongue, .bottomTongue, .glueTab, .dustFlap { position: absolute; }
+.topTongue { bottom: 100%; left: 0; width: 100%; height: 44.444444%; transform-origin: center bottom; animation: releaseTopTab 4.6s cubic-bezier(.4, 0, .2, 1) both; }
+.bottomTongue { top: 100%; left: 0; width: 100%; height: 50.980392%; transform-origin: center top; animation: releaseBottomTab 4.6s cubic-bezier(.4, 0, .2, 1) both; }
+.topTongue svg, .bottomTongue svg, .glueTab svg, .dustFlap svg { display: block; width: 100%; height: 100%; }
+.glueTab { right: 100%; top: 0; width: 25.142857%; height: 100%; transform-origin: right center; animation: releaseGlue 4.6s cubic-bezier(.4, 0, .2, 1) both; }
+.dustFlap { left: 0; width: 100%; height: 22.068966%; }
+.dustTop { bottom: 100%; transform-origin: center bottom; animation: releaseTopTab 4.6s cubic-bezier(.4, 0, .2, 1) both; }
+.dustBottom { top: 100%; transform-origin: center top; animation: releaseBottomTab 4.6s cubic-bezier(.4, 0, .2, 1) both; }
+.groundShadow { position: absolute; left: 25%; top: 77%; width: 46%; height: 7%; border-radius: 50%; background: radial-gradient(ellipse, #4a383135, #4a383100 70%); animation: softenShadow 4.6s ease both; }
+.scene[data-ready="false"] * { animation-play-state: paused; }
+.controls { display: flex; justify-content: flex-end; padding-right: 5%; margin-top: -15px; position: relative; }
+.controls button { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 10px 4px; font-size: 11px; color: #79613f; cursor: pointer; transition: opacity .4s, color .3s; }
+.controls button:disabled { opacity: 0; pointer-events: none; }
+.controls button:hover { color: #4a3831; }
+.controls button:focus-visible { outline: 2px solid #806438; outline-offset: 4px; border-radius: 3px; }
+.controls svg { width: 16px; height: 16px; }
+/* Briefly normalize the legacy net’s unequal widths to close the box without gaps.
+   Release the lids, unwrap the walls, then return to the original flat dimensions. */
+@keyframes settle {
+  0%, 12% { transform: translateX(-62%) translateY(-4%) rotateX(-14deg) rotateY(-30deg) rotateZ(-5deg) scale(1.12); }
+  48% { transform: translateX(-40%) translateY(-3%) rotateX(-8deg) rotateY(-18deg) rotateZ(-3deg) scale(1.05); }
+  100% { transform: none; }
+}
+@keyframes openLeft { 0%, 27% { transform: rotateY(-90deg); } 83%, 100% { transform: rotateY(0); } }
+@keyframes openRear { 0%, 41% { transform: rotateY(-90deg) scaleX(.971429); } 98%, 100% { transform: rotateY(0) scaleX(1); } }
+@keyframes openRight { 0%, 29% { transform: rotateY(90deg) scaleX(1.238095); } 79%, 100% { transform: rotateY(0) scaleX(1); } }
+@keyframes openTop { 0%, 13% { transform: rotateX(90deg) scaleY(1.203704); } 55%, 100% { transform: rotateX(0) scaleY(1); } }
+@keyframes openBottom { 0%, 19% { transform: rotateX(-90deg) scaleY(1.27451); } 62%, 100% { transform: rotateX(0) scaleY(1); } }
+@keyframes releaseTopTab { 0%, 18% { transform: rotateX(90deg); } 53%, 100% { transform: rotateX(0); } }
+@keyframes releaseBottomTab { 0%, 23% { transform: rotateX(-90deg); } 58%, 100% { transform: rotateX(0); } }
+@keyframes releaseGlue { 0%, 40% { transform: rotateY(-90deg); } 86%, 100% { transform: rotateY(0); } }
+@keyframes revealPrint { 0%, 22% { opacity: 1; } 52%, 100% { opacity: 0; } }
+@keyframes softenShadow { 0%, 18% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.6, .5); } }
+/* Final, static defaults are also used without JavaScript or 3D support. */
+.closedPrint, .groundShadow { opacity: 0; }
+@media (max-width: 639px) { .panelCopy { display: none; } .controls { margin-top: -9px; } .controls button { font-size: 10px; } }
+@media (prefers-reduced-motion: reduce) {
+  .component * { animation: none !important; transition: none !important; }
+  .closedPrint, .groundShadow { display: none; }
+  .controls { visibility: hidden; }
+}
+@supports not (transform-style: preserve-3d) {
+  .component * { animation: none !important; }
+  .closedPrint, .groundShadow, .controls { display: none; }
+}

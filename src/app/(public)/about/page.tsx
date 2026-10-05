@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image, { getImageProps } from "next/image";
 import Link from "next/link";
 import { CountUp } from "@/components/common/CountUp";
+import { AboutCarton } from "@/components/sections/AboutCarton";
 import { ABOUT_PAGE, INDUSTRIES, PROCESS_STEPS } from "@/lib/content";
 
 export const metadata: Metadata = { title: "About" };
@@ -29,59 +30,6 @@ const STACK = [
   { src: "/images/industries/fmcg.jpg", alt: "Packaged goods on retail shelves", box: "left-[10%] top-[6%] h-[72%] w-[46%]", z: 2 },
   { src: "/images/industries/retail-ecommerce.jpg", alt: "Corrugated shipping carton with a label", box: "left-[24%] top-[18%] h-[78%] w-[76%]", z: 3 },
 ] as const;
-
-// Dieline palette, drawn from the site's gold / cocoa tokens.
-const TAB = "#b99a60";
-const PANEL = "#ded2bc";
-
-/** An unfolded carton whose side panels are cut from the hero banner photo. */
-function Dieline({ photo }: { photo: string }) {
-  return (
-    <svg viewBox="0 0 680 640" role="img" aria-label="An unfolded Box Theory carton showing our packaging in warm light" className="h-auto w-full drop-shadow-[0_24px_30px_rgb(74_56_49/0.25)]">
-      <defs>
-        <clipPath id="about-panels"><rect x="70" y="170" width="580" height="290" /></clipPath>
-        <linearGradient id="about-fade-l" x1="0" x2="1"><stop offset="0" stopColor="#4a3831" stopOpacity=".78" /><stop offset="1" stopColor="#4a3831" stopOpacity=".05" /></linearGradient>
-        <linearGradient id="about-fade-r" x1="1" x2="0"><stop offset="0" stopColor="#4a3831" stopOpacity=".7" /><stop offset="1" stopColor="#4a3831" stopOpacity="0" /></linearGradient>
-      </defs>
-
-      <g fill={TAB} stroke={TAB} strokeWidth="8" strokeLinejoin="round">
-        <path d="M108 62h104l-8-44h-88z" />
-        <path d="M268 170h84l-8-60h-68z" />
-        <path d="M558 170h84l-8-64h-68z" />
-        <path d="M268 460h84l-8 60h-68z" />
-        <path d="M558 460h84l-8 60h-68z" />
-        <path d="M70 236 30 250v168l40 22z" />
-        <path d="M398 562h124l-10 48h-104z" />
-      </g>
-      <g fill={PANEL} stroke={PANEL} strokeWidth="2" strokeLinejoin="round">
-        <rect x="70" y="62" width="175" height="108" />
-        <rect x="375" y="460" width="170" height="102" />
-      </g>
-
-      <g clipPath="url(#about-panels)">
-        <image href={photo} x="70" y="170" width="580" height="290" preserveAspectRatio="xMaxYMid slice" />
-        <rect x="70" y="170" width="175" height="290" fill="url(#about-fade-l)" />
-        <rect x="545" y="170" width="105" height="290" fill="url(#about-fade-r)" />
-      </g>
-      <g stroke="#fff" strokeOpacity=".55" strokeWidth="1.5">
-        <path d="M245 170v290M375 170v290M545 170v290" />
-      </g>
-
-      {/* Panel copy is dropped on small screens, where it would render too small to read. */}
-      <g className="hidden sm:inline" fill="#fff" fontWeight="600" style={{ textShadow: "0 1px 6px rgb(74 56 49 / .6)" }}>
-        <text x="88" y="262" fontSize="17">Better</text>
-        <text x="88" y="285" fontSize="17">packaging.</text>
-        <text x="88" y="308" fontSize="17">From idea</text>
-        <text x="88" y="331" fontSize="17">to delivery.</text>
-        <rect x="88" y="344" width="26" height="2" fill="#c3ac7f" />
-        <text x="560" y="300" fontSize="14">Design.</text>
-        <text x="560" y="320" fontSize="14">Source.</text>
-        <text x="560" y="340" fontSize="14">Deliver.</text>
-        <rect x="560" y="352" width="22" height="2" fill="#c3ac7f" />
-      </g>
-    </svg>
-  );
-}
 
 export default function Page() {
   const { props: photo } = getImageProps({ src: "/images/hero_section/desktop_banner_img1.png", alt: "", width: 1200, height: 675, quality: 75 });
@@ -115,7 +63,7 @@ export default function Page() {
           </div>
 
           <div className="order-first mx-auto w-full max-w-[640px] lg:order-none lg:max-w-none">
-            <Dieline photo={photo.src} />
+            <AboutCarton photo={photo.src} />
           </div>
         </div>
       </section>
