@@ -5,7 +5,8 @@ const contactEnquirySchema = new Schema(
   {
     name: { type: String, required: true, trim: true },
     company: { type: String, trim: true },
-    email: { type: String, required: true, trim: true, lowercase: true },
+    // Optional: the featured-products quick enquiry only asks for a mobile number.
+    email: { type: String, trim: true, lowercase: true },
     phone: { type: String, trim: true },
     subject: { type: String, trim: true },
     packagingRequirement: { type: String, trim: true },

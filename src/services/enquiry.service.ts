@@ -5,7 +5,8 @@ import { getPagination, totalPages, startOfMonth, startOfDay } from "@/lib/utils
 import type { EnquiryStatus } from "@/lib/constants";
 import type { EnquiryInput } from "@/validations/enquiry.schema";
 
-type CreateEnquiryInput = Omit<EnquiryInput, "website"> & {
+type CreateEnquiryInput = Omit<EnquiryInput, "website" | "email"> & {
+  email?: string;
   referenceFile?: { url: string; publicId: string; filename?: string };
 };
 
@@ -14,7 +15,7 @@ export async function createEnquiry(input: CreateEnquiryInput, ipAddress?: strin
   return ContactEnquiry.create({
     name: input.name,
     company: input.company || undefined,
-    email: input.email,
+    email: input.email || undefined,
     phone: input.phone || undefined,
     subject: input.subject || undefined,
     packagingRequirement: input.packagingRequirement || undefined,

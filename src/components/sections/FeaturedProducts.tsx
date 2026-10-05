@@ -5,6 +5,7 @@ import { motion, useMotionValue, useReducedMotion, useSpring } from "motion/reac
 import type { PointerEvent } from "react";
 import { SITE, SOLUTIONS } from "@/lib/content";
 import type { Solution } from "@/lib/types";
+import { FeaturedEnquiry } from "./FeaturedEnquiry";
 import styles from "./FeaturedProducts.module.css";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -131,6 +132,8 @@ export function FeaturedProducts() {
           </ul>
         </div>
         <div className={styles.customNote}><span className={styles.noteIcon} aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3"><path d="m12 3 9 5v9l-9 5-9-5V8l9-5Zm0 10 9-5M3 8l9 5v9M7.5 5.5l9 5v4" /></svg></span><p>Your product. Your dimensions. Your brand.<span> Let’s find the right fit.</span></p><a href="#enquire">Talk to Box Theory <Arrow /></a></div>
+
+        <FeaturedEnquiry />
       </div>
     </section>
   );

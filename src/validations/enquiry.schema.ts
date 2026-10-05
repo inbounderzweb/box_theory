@@ -21,3 +21,23 @@ export const enquiryInputSchema = z.object({
 });
 
 export type EnquiryInput = z.infer<typeof enquiryInputSchema>;
+
+/** Quick enquiry under Featured Products: name, mobile and message are required; email is optional. */
+export const productEnquirySchema = z.object({
+  name: z.string().trim().min(1, "Please tell us your name").max(120),
+  email: z.string().trim().email("Enter a valid email address").optional().or(z.literal("")),
+  phone: z
+    .string()
+    .trim()
+    .min(1, "Please share a mobile number")
+    .refine((value) => {
+      if (!/^[0-9+\-\s()]{7,20}$/.test(value)) return false;
+      const digits = value.replace(/\D/g, "").length;
+      return digits >= 7 && digits <= 15;
+    }, "Enter a valid mobile number"),
+  message: z.string().trim().min(1, "Please add a short message").max(2000, "Please keep your message under 2000 characters"),
+  // Honeypot, same convention as enquiryInputSchema.
+  website: z.string().max(0, "Spam detected").optional().or(z.literal("")),
+});
+
+export type ProductEnquiryInput = z.infer<typeof productEnquirySchema>;

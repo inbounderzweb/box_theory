@@ -38,9 +38,13 @@ export default async function EnquiryDetailPage({ params }: { params: Promise<{ 
         <dd className="text-neutral-900">{enquiry.company || "—"}</dd>
         <dt className="text-neutral-500">Email</dt>
         <dd>
-          <a href={`mailto:${enquiry.email}`} className="text-indigo-600 underline">
-            {enquiry.email}
-          </a>
+          {enquiry.email ? (
+            <a href={`mailto:${enquiry.email}`} className="text-indigo-600 underline">
+              {enquiry.email}
+            </a>
+          ) : (
+            "—"
+          )}
         </dd>
         <dt className="text-neutral-500">Phone</dt>
         <dd>

@@ -69,7 +69,7 @@ export default async function EnquiriesListPage({
                     {item.name}
                   </Link>
                 </td>
-                <td className="p-3 text-neutral-600">{item.email}</td>
+                <td className="p-3 text-neutral-600">{item.email || item.phone || "—"}</td>
                 <td className="p-3 text-neutral-600">{item.subject || "—"}</td>
                 <td className="p-3">
                   <StatusBadge status={item.status} />

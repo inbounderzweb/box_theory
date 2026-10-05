@@ -1,7 +1,8 @@
 "use client";
 
+import { useRef } from "react";
 import { getImageProps } from "next/image";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -19,6 +20,11 @@ function highlight(text: string) {
 
 export function WhyChooseUs() {
   const reduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // 0 as the section enters at the bottom of the viewport, 1 as it leaves at the top.
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const scale = useTransform(scrollYProgress, [0, 1], [1.12, 1]);
 
   const common = { alt: "", fill: true, quality: 80, sizes: "100vw", loading: "eager" } as const;
   const { props: desktop } = getImageProps({ ...common, src: "/images/why-choose/desktop_background.png" });
@@ -32,16 +38,28 @@ export function WhyChooseUs() {
   });
 
   return (
-    // Sticky: once it reaches the top it stays pinned while the next sections scroll over it.
-    <section id="why-choose-us" aria-labelledby="why-choose-title" className="sticky top-0 z-0 isolate flex bg-cocoa-umber min-h-svh items-center justify-center overflow-hidden py-24 text-gold-lightest">
-      <div aria-hidden="true" className="absolute inset-0 -z-20">
+    // Fixed-background window: the image is pinned to the viewport and clip-path (which, unlike overflow,
+    // also clips position:fixed children) shows it only inside this section. The picture stays still while the
+    // section and its copy scroll past. Works on iOS, where background-attachment: fixed does not.
+    <section
+      ref={sectionRef}
+      id="why-choose-us"
+      aria-labelledby="why-choose-title"
+      className="relative isolate flex min-h-svh items-center justify-center bg-cocoa-umber py-28 text-gold-lightest [clip-path:inset(0)] md:py-36"
+    >
+      <motion.div aria-hidden="true" style={reduceMotion ? undefined : { scale }} className="fixed inset-x-0 top-0 -z-20 h-lvh will-change-transform">
         <picture>
           <source media="(max-width: 767px)" srcSet={mobile.srcSet} />
           <source media="(min-width: 768px)" srcSet={desktop.srcSet} />
           <img {...desktop} alt="" className="h-full w-full object-cover object-center" />
         </picture>
-      </div>
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-cocoa-umber/50" />
+      </motion.div>
+      {/* Even tint, plus a deeper pool behind the copy so it stays legible over the bright window light. */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-cocoa-umber/45" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_55%_at_center,rgb(74_56_49/0.55),transparent)]" />
+      {/* Soft edges into the marquee above and the industries section below. */}
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-24 bg-gradient-to-b from-cocoa-umber to-transparent md:h-32" />
+      <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-[#322a24] to-transparent md:h-32" />
 
       <div className="mx-auto w-[calc(100%-40px)] max-w-[900px] text-center [text-shadow:0_1px_18px_rgb(74_56_49/0.45)] md:w-[calc(100%-96px)]">
         <motion.p {...rise(0)} className="mb-5 flex items-center justify-center gap-3 text-[11px] font-semibold tracking-[.16em] text-gold-soft">
