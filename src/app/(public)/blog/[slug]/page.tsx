@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import { BlogSidebar } from "@/components/blog/BlogSidebar";
 import { PostNavigation } from "@/components/blog/PostNavigation";
@@ -39,7 +39,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const post = await getPublishedBlogPostBySlug(slug).catch(() => null);
 
   if (!post) {
-    notFound();
+    redirect("/");
   }
 
   const [adjacent, recent, categories, tags] = await Promise.all([

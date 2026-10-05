@@ -114,7 +114,7 @@ export default function Page() {
             </Link>
           </div>
 
-          <div className="mx-auto w-full max-w-[640px] lg:max-w-none">
+          <div className="order-first mx-auto w-full max-w-[640px] lg:order-none lg:max-w-none">
             <Dieline photo={photo.src} />
           </div>
         </div>

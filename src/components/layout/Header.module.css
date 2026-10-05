@@ -3,21 +3,26 @@
   --ink: #4a3831;
   --kraft: #d5b27c;
   --ease: cubic-bezier(.22, 1, .36, 1);
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 40;
   background: var(--paper);
   color: var(--ink);
   border-bottom: 1px solid #4a383118;
+  transition: color .3s, border-color .3s, box-shadow .3s;
 }
+/* The frosted backdrop lives on a pseudo-element so the header itself never becomes a containing block for the menu dialog. */
+.header::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--paper); transition: background .3s, opacity .3s; }
 /* Home page: header floats transparently over the hero image. */
-.header.overlay { position: absolute; inset: 0 0 auto 0; background: transparent; border-bottom-color: transparent; color: #f1ebdf; text-shadow: 0 1px 10px #4a383199; }
+.header.overlay { position: fixed; inset: 0 0 auto 0; background: transparent; border-bottom-color: transparent; color: #f1ebdf; text-shadow: 0 1px 10px #4a383199; }
+.header.overlay::before { opacity: 0; }
 .overlay .brand small { color: #d3d0cf; }
 .overlay .tabFlap { background: #f1ebdf26; border-color: #f1ebdf40; }
 .overlay .tabDot { background: #cfc09f; }
 .overlay .brandIcon { color: #cfc09f; }
 .overlay .menuTrigger { background: #f1ebdf1f; border-color: #f1ebdf59; backdrop-filter: blur(6px); }
 .overlay .menuTrigger:hover { background: #f1ebdf33; box-shadow: 0 5px 0 -2px #b99a60; }
-.bar { width: min(1280px, calc(100% - 96px)); min-height: 100px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+.bar { width: min(1280px, calc(100% - 96px)); min-height: 100px; transition: min-height .3s var(--ease); margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
 .brand { display: flex; align-items: center; gap: 11px; flex-shrink: 0; font-family: var(--font-display); font-size: 22px; font-weight: 600; letter-spacing: -.045em; }
 .brand small { display: block; margin-top: 4px; font-family: var(--font-sans); font-size: 8px; font-weight: 500; letter-spacing: .19em; color: #8b817d; }
 .brandIcon { display: grid; place-items: center; width: 44px; height: 48px; color: #b99a60; perspective: 120px; }
@@ -168,3 +173,15 @@
   .menuLink, .feature, .parcelSpark { opacity: 1; }
   .menuLink, .parcel, .parcelBackFlaps, .parcelFrontFlaps, .tabFlap, .glyphLeft, .glyphRight, .linkLabel, .linkArrow { transform: none !important; }
 }
+
+/* Once the page scrolls, every page gets a compact, solid bar that stays pinned to the top. */
+.header.scrolled { border-bottom-color: #4a383122; box-shadow: 0 8px 28px -14px #4a383166; }
+.header.scrolled::before { opacity: 1; background: #f1ebdff7; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.header.scrolled .bar { min-height: 76px; }
+.header.overlay.scrolled { color: var(--ink); text-shadow: none; }
+.header.overlay.scrolled .brand small { color: #8b817d; }
+.header.overlay.scrolled .tabFlap { background: #ded2bc; border-color: #cfc09f; }
+.header.overlay.scrolled .tabDot { background: #b99a60; }
+.header.overlay.scrolled .brandIcon { color: #b99a60; }
+.header.overlay.scrolled .menuTrigger { background: #4a3831; border-color: #4a3831; backdrop-filter: none; }
+.header.overlay.scrolled .menuTrigger:hover { background: #6b5d56; box-shadow: 0 5px 0 -2px #cab38e; }

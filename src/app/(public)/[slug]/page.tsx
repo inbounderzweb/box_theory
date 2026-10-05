@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { getPublishedPageBySlug } from "@/services/page.service";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
@@ -26,7 +26,7 @@ export default async function CmsPage({ params }: { params: Promise<{ slug: stri
   const page = await getPublishedPageBySlug(slug).catch(() => null);
 
   if (!page) {
-    notFound();
+    redirect("/");
   }
 
   return (

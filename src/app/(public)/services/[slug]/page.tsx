@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
-import { Reveal } from "@/components/animations/Reveal";
-import { Container } from "@/components/ui/Container";
-import { PageHero } from "@/components/ui/PageHero";
-import { FinalCta } from "@/components/sections/FinalCta";
+import { ServiceDetailView } from "@/components/sections/ServiceDetailView";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
 import { SERVICES } from "@/lib/content";
@@ -37,28 +34,8 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
   const service = getService(slug);
 
   if (!service) {
-    notFound();
+    redirect("/");
   }
 
-  return (
-    <>
-      <PageHero eyebrow="Service Detail" />
-
-      <section className="bg-ivory pb-24 lg:pb-32">
-        <Container>
-          <Reveal className="max-w-2xl">
-            <ul className="mt-6 flex flex-col gap-4 border-t border-line pt-6">
-              {service.whatItIncludes.map((item) => (
-                <li key={item} className="flex items-start gap-3 py-2" aria-hidden>
-                  <span className="h-px w-5 shrink-0 bg-champagne" />
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </Container>
-      </section>
-
-      <FinalCta />
-    </>
-  );
+  return <ServiceDetailView service={service} crumbs={[{ label: "Home", href: "/" }, { label: "Services", href: "/services" }, { label: service.title }]} />;
 }

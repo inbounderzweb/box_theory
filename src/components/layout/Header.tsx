@@ -62,6 +62,7 @@ function containFocus(event: KeyboardEvent<HTMLDialogElement>) {
 export function Header() {
   const pathname = usePathname();
   const [expanded, setExpanded] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
@@ -130,10 +131,17 @@ export function Header() {
 
   useEffect(() => resetTransientState, [resetTransientState]);
 
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 24);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, [pathname]);
+
   const isActive = (href: string) => href === "/" ? pathname === "/" : (pathname === href || pathname.startsWith(`${href}/`));
 
   return (
-    <header className={`${styles.header} ${pathname === "/" ? styles.overlay : ""}`}>
+    <header className={`${styles.header} ${pathname === "/" ? styles.overlay : ""} ${scrolled ? styles.scrolled : ""}`}>
       <a className={styles.skip} href="#main">Skip to content</a>
       <div className={styles.bar}>
         <Link href="/" aria-label="Box Theory home" className={styles.brand}>

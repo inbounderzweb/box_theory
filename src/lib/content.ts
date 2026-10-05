@@ -30,9 +30,7 @@ export const NAV_ITEMS: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
-  { label: "Industries", href: "/industries" },
   { label: "Portfolio", href: "/portfolio" },
-  { label: "Future Solutions", href: "/future-solutions" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -355,14 +353,12 @@ export const FOOTER = {
       links: [
         { label: "About", href: "/about" },
         { label: "Services", href: "/services" },
-        { label: "Industries", href: "/industries" },
       ],
     },
     {
       title: "More",
       links: [
         { label: "Portfolio", href: "/portfolio" },
-        { label: "Future Solutions", href: "/future-solutions" },
         { label: "Contact", href: "/contact" },
       ],
     },
