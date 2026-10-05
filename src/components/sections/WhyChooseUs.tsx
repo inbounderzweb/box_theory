@@ -62,9 +62,9 @@ export function WhyChooseUs() {
       <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-[#322a24] to-transparent md:h-32" />
 
       <div className="mx-auto w-[calc(100%-40px)] max-w-[900px] text-center [text-shadow:0_1px_18px_rgb(74_56_49/0.45)] md:w-[calc(100%-96px)]">
-        <motion.p {...rise(0)} className="mb-5 flex items-center justify-center gap-3 text-[11px] font-semibold tracking-[.16em] text-gold-soft">
+        {/* <motion.p {...rise(0)} className="mb-5 flex items-center justify-center gap-3 text-[11px] font-semibold tracking-[.16em] text-gold-soft">
           <span className="size-[7px] rounded-full bg-champagne-gold" /> WHY BOX THEORY
-        </motion.p>
+        </motion.p> */}
         <motion.h2 {...rise(0.1)} id="why-choose-title" className="font-display text-[clamp(38px,6vw,72px)] font-semibold leading-[1.06] tracking-[-.05em]">
           Why Choose Us
         </motion.h2>

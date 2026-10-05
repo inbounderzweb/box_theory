@@ -35,13 +35,13 @@ export default function Page() {
           <img {...heroDesktop} alt={HERO_ALT} className="roofer-hero-image" />
         </picture>
         <div className="roofer-container roofer-hero-content">
-          <p className="roofer-eyebrow"><span /> PACKAGING CONSULTANCY & EXECUTION</p>
+          {/* <p className="roofer-eyebrow"><span /> PACKAGING CONSULTANCY & EXECUTION</p> */}
           <h1 id="hero-title">Better packaging.<br />From idea<br />to delivery.</h1>
           <p className="roofer-hero-copy">Intelligent packaging for ambitious brands. We bring design, sourcing, and manufacturing together — so you can focus on what’s inside.</p>
           <div className="roofer-actions"><a className="roofer-button" href="#enquire">Let’s Build Your Packaging <span aria-hidden="true">↗</span></a><a className="roofer-text-link" href="#services">Explore Our Services <span aria-hidden="true">↗</span></a></div>
           <div className="roofer-hero-note"><span className="roofer-note-icon"><BoxIcon /></span><p>One partner. Every detail.<small>Serving India, GCC & international markets</small></p></div>
         </div>
-        <div className="roofer-hero-caption" aria-hidden="true">THOUGHTFULLY DESIGNED. EXPERTLY DELIVERED.</div>
+        {/* <div className="roofer-hero-caption" aria-hidden="true">THOUGHTFULLY DESIGNED. EXPERTLY DELIVERED.</div> */}
       </section>
 
       <section className="roofer-marquee" aria-label="What we do">
