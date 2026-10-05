@@ -20,9 +20,9 @@ const QUALITY_POINTS = [
 ] as const;
 
 const STATS = [
-  { value: INDUSTRIES.length, suffix: "", label: "Industries Served" },
-  { value: PROCESS_STEPS.length, suffix: "", label: "Step Process" },
-  { value: 3, suffix: "", label: "Markets: India, GCC, Global" },
+  { value: INDUSTRIES.length, suffix: "+", label: "Industries Served" },
+  { value: PROCESS_STEPS.length, suffix: "+", label: "Step Process" },
+  { value: 3, suffix: "+", label: "Markets: India, GCC, Global" },
 ] as const;
 
 const STACK = [

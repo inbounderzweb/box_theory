@@ -516,6 +516,10 @@
   .roofer-actions { margin-top: clamp(18px, 3.2vh, 34px); }
   .roofer-hero-note { margin-top: clamp(20px, 4.4vh, 47px); }
 }
+/* Tall screens have room to lift the whole hero block off the bottom edge; short laptops keep the tighter fit. */
+@media (min-width: 641px) and (min-height: 800px) {
+  .roofer-hero-content { padding-block-end: clamp(64px, 11.5vh, 140px); }
+}
 @media (min-width: 1920px) { .roofer-container.roofer-hero-content { width: min(1600px, calc(100% - 160px)); } .roofer-hero-copy { max-width: 640px; font-size: 20px; } .roofer-home h1 { max-width: 1100px; } }
 @media (max-width: 900px) { .roofer-container.roofer-hero-content { width: calc(100% - 48px); } }
 @media (max-width: 640px) {
@@ -524,4 +528,61 @@
   .roofer-hero-copy { font-size: clamp(14px, 2.3vh, 15px); line-height: 1.65; margin-top: clamp(12px, 2vh, 20px); }
   .roofer-actions { margin-top: clamp(16px, 2.6vh, 28px); gap: 18px; }
   .roofer-hero-note { margin-top: clamp(16px, 3vh, 30px); }
+}
+
+/* Hero motion uses the existing CSS system; the approved layout stays unchanged. */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(var(--hero-rise-distance, 18px)); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes hero-fade { from { opacity: 0; } to { opacity: 1; } }
+
+.roofer-hero-line {
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: top;
+  --hero-line-delay: 0s;
+}
+/* Whole words retain the approved font shaping and remain available to screen readers. */
+.roofer-hero-word {
+  display: inline-block;
+  vertical-align: top;
+  --hero-rise-distance: 8px;
+  --hero-word-delay: .12s;
+  animation: hero-rise .8s cubic-bezier(.22, 1, .36, 1) backwards;
+  animation-delay: calc(var(--hero-line-delay) + var(--hero-word-delay));
+}
+.roofer-hero-word:nth-child(2) { --hero-word-delay: .45s; }
+.roofer-hero-line:nth-of-type(2) { --hero-line-delay: .83s; }
+.roofer-hero-line:nth-of-type(3) { --hero-line-delay: 1.66s; }
+.roofer-hero-copy { animation: hero-rise .65s cubic-bezier(.22, 1, .36, 1) 2.45s backwards; }
+/* Entrance belongs to the existing wrapper, leaving each link free to respond to hover. */
+.roofer-hero .roofer-actions { --hero-rise-distance: 16px; animation: hero-rise .65s cubic-bezier(.22, 1, .36, 1) 2.67s backwards; }
+.roofer-hero-note > p { --hero-rise-distance: 12px; animation: hero-rise .6s cubic-bezier(.22, 1, .36, 1) 2.89s backwards; }
+.roofer-hero .roofer-note-icon { display: inline-flex; animation: hero-fade .6s ease-out 2.89s backwards; }
+
+.roofer-hero .roofer-button { transition: transform .25s cubic-bezier(.22, 1, .36, 1); }
+.roofer-hero .roofer-button:hover { background: var(--roofer-amber); transform: none; }
+.roofer-hero .roofer-text-link:hover { color: inherit; }
+.roofer-hero .roofer-button > span, .roofer-hero .roofer-text-link > span { display: inline-block; transition: transform .25s cubic-bezier(.22, 1, .36, 1); }
+.roofer-hero .roofer-button:focus-visible > span, .roofer-hero .roofer-text-link:focus-visible > span { transform: translate(5px, -2px); }
+/* Keyboard users can act immediately, even during the delayed entrance. */
+.roofer-hero .roofer-actions:focus-within { animation: none; }
+@media (hover: hover) and (pointer: fine) {
+  .roofer-hero .roofer-button:hover { transform: scale(1.02); }
+  .roofer-hero .roofer-button:hover > span, .roofer-hero .roofer-text-link:hover > span { transform: translate(5px, -2px); }
+}
+@media (max-width: 640px) {
+  .roofer-hero-word { --hero-rise-distance: 6px; --hero-word-delay: .08s; animation-duration: .7s; }
+  .roofer-hero-word:nth-child(2) { --hero-word-delay: .36s; }
+  .roofer-hero-line:nth-of-type(2) { --hero-line-delay: .72s; }
+  .roofer-hero-line:nth-of-type(3) { --hero-line-delay: 1.44s; }
+  .roofer-hero-copy { --hero-rise-distance: 12px; animation-duration: .6s; animation-delay: 2.12s; }
+  .roofer-hero .roofer-actions { --hero-rise-distance: 12px; animation-duration: .6s; animation-delay: 2.34s; }
+  .roofer-hero-note > p { --hero-rise-distance: 8px; animation-duration: .55s; animation-delay: 2.56s; }
+  .roofer-hero .roofer-note-icon { animation-duration: .55s; animation-delay: 2.56s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roofer-hero-word, .roofer-hero-copy, .roofer-hero .roofer-actions, .roofer-hero-note > p, .roofer-hero .roofer-note-icon { animation: none !important; opacity: 1; transform: none; }
+  .roofer-hero .roofer-button, .roofer-hero .roofer-text-link, .roofer-hero .roofer-button > span, .roofer-hero .roofer-text-link > span { transition: none !important; transform: none !important; }
 }

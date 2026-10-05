@@ -1,21 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type CSSProperties, type KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 import { NAV_ITEMS, SITE } from "@/lib/content";
 import styles from "./Header.module.css";
-
-function BoxGlyph() {
-  return (
-    <svg viewBox="0 0 40 40" fill="none" aria-hidden="true" className={styles.boxGlyph}>
-      <path d="M8 18 20 12l12 6v14l-12 6-12-6Z" fill="currentColor" opacity=".12" />
-      <path d="m8 18 12 6 12-6v14l-12 6-12-6V18Zm12 6v14" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-      <path className={styles.glyphLeft} d="m8 18 12-6 0 12Z" fill="currentColor" fillOpacity=".24" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-      <path className={styles.glyphRight} d="m20 12 12 6-12 6Z" fill="currentColor" fillOpacity=".12" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-    </svg>
-  );
-}
 
 function Parcel() {
   return (
@@ -145,8 +135,8 @@ export function Header() {
       <a className={styles.skip} href="#main">Skip to content</a>
       <div className={styles.bar}>
         <Link href="/" aria-label="Box Theory home" className={styles.brand}>
-          <span className={styles.brandIcon}><BoxGlyph /></span>
-          <span>Box Theory<small>PACKAGING, UNFOLDED.</small></span>
+          <Image src="/images/logos/Box%20Theory%20Logo-01%20(1).svg" alt="" width={746} height={282} priority className={`${styles.logo} ${styles.logoOnLight}`} />
+          <Image src="/images/logos/Box%20Theory%20Logo-02.svg" alt="" width={746} height={282} priority className={`${styles.logo} ${styles.logoOnDark}`} />
         </Link>
         <nav className={styles.quickNav} aria-label="Primary navigation">
           {NAV_ITEMS.map(item => (
