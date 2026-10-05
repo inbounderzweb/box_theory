@@ -409,7 +409,7 @@
 .roofer-mobile-nav { display: none; }
 .roofer-skip { position: absolute; left: 20px; top: -100px; background: white; padding: 12px; }
 .roofer-skip:focus { top: 10px; z-index: 50; }
-.roofer-hero { position: relative; isolation: isolate; background: #4a3831; overflow: hidden; color: white; min-height: min(100svh, 860px); display: flex; align-items: flex-end; }
+.roofer-hero { position: relative; isolation: isolate; background: #4a3831; overflow: hidden; color: white; min-height: 100vh; min-height: 100svh; display: flex; align-items: flex-end; }
 .roofer-hero > picture { position: absolute; inset: 0; z-index: -2; }
 .roofer-hero-image { width: 100%; height: 100%; object-fit: cover; object-position: 72% center; }
 .roofer-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 34% 46% at 20% 68%, #4a3831b8 0%, #4a383100 100%), radial-gradient(ellipse 20% 26% at 9% 92%, #4a38319e 0%, #4a383100 100%), radial-gradient(ellipse 18% 24% at 36% 58%, #4a383166 0%, #4a383100 100%), radial-gradient(ellipse 16% 20% at 28% 90%, #4a383173 0%, #4a383100 100%); filter: blur(14px); }
@@ -507,3 +507,21 @@
 .roofer-footer > div { max-width: 1280px; }
 
 @keyframes process-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
+/* Landing hero: always fills the screen and scales with both width and height. */
+@media (min-width: 641px) {
+  .roofer-hero-content { padding-block: clamp(96px, 17vh, 190px) clamp(32px, 7vh, 95px); }
+  .roofer-home h1 { font-size: clamp(40px, min(6.5vw, 10.5vh), 128px); }
+  .roofer-hero-copy { margin-top: clamp(14px, 2.6vh, 28px); }
+  .roofer-actions { margin-top: clamp(18px, 3.2vh, 34px); }
+  .roofer-hero-note { margin-top: clamp(20px, 4.4vh, 47px); }
+}
+@media (min-width: 1920px) { .roofer-container.roofer-hero-content { width: min(1600px, calc(100% - 160px)); } .roofer-hero-copy { max-width: 640px; font-size: 20px; } .roofer-home h1 { max-width: 1100px; } }
+@media (max-width: 900px) { .roofer-container.roofer-hero-content { width: calc(100% - 48px); } }
+@media (max-width: 640px) {
+  .roofer-container.roofer-hero-content { width: calc(100% - 40px); padding-block: clamp(96px, 16vh, 130px) clamp(28px, 5vh, 48px); }
+  .roofer-home h1 { font-size: clamp(34px, min(12vw, 7.2vh), 56px); }
+  .roofer-hero-copy { font-size: clamp(14px, 2.3vh, 15px); line-height: 1.65; margin-top: clamp(12px, 2vh, 20px); }
+  .roofer-actions { margin-top: clamp(16px, 2.6vh, 28px); gap: 18px; }
+  .roofer-hero-note { margin-top: clamp(16px, 3vh, 30px); }
+}
