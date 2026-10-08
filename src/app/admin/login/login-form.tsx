@@ -16,7 +16,7 @@ export function LoginForm() {
           Email
         </label>
         <div className="relative">
-          <MailIcon className="pointer-events-none absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-400" />
+          <MailIcon className="pointer-events-none absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-[#b99a60]" />
           <input
             id="email"
             name="email"
@@ -26,7 +26,7 @@ export function LoginForm() {
             placeholder="Email address"
             aria-invalid={state?.errors?.email ? true : undefined}
             aria-describedby={state?.errors?.email ? "email-error" : undefined}
-            className="w-full rounded-xl border border-neutral-200 bg-neutral-50 py-3 pl-11 pr-4 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+            className="w-full rounded-xl border border-neutral-200 bg-neutral-50 py-3 pl-11 pr-4 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-[#b99a60] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#b99a60]/25"
           />
         </div>
         {state?.errors?.email && (
@@ -41,7 +41,7 @@ export function LoginForm() {
           Password
         </label>
         <div className="relative">
-          <LockIcon className="pointer-events-none absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-400" />
+          <LockIcon className="pointer-events-none absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-[#b99a60]" />
           <input
             id="password"
             name="password"
@@ -51,14 +51,14 @@ export function LoginForm() {
             placeholder="Password"
             aria-invalid={state?.errors?.password ? true : undefined}
             aria-describedby={state?.errors?.password ? "password-error" : undefined}
-            className="w-full rounded-xl border border-neutral-200 bg-neutral-50 py-3 pl-11 pr-11 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+            className="w-full rounded-xl border border-neutral-200 bg-neutral-50 py-3 pl-11 pr-11 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-[#b99a60] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#b99a60]/25"
           />
           <button
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
             aria-label={showPassword ? "Hide password" : "Show password"}
             aria-pressed={showPassword}
-            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600"
+            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#8b817d] hover:text-[#4a3831]"
           >
             {showPassword ? <EyeOffIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
           </button>
@@ -79,7 +79,7 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="mt-2 w-full rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 disabled:opacity-60"
+        className="mt-2 w-full rounded-xl bg-[#4a3831] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#b99a60] disabled:opacity-60"
       >
         {pending ? "Signing in…" : "Login"}
       </button>
