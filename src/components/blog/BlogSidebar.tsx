@@ -31,9 +31,9 @@ function Widget({
   labelledBy?: string;
 }) {
   return (
-    <section aria-labelledby={labelledBy} className="border border-line bg-white p-7">
+    <section aria-labelledby={labelledBy} className="rounded-2xl bg-white p-6 ring-1 ring-gold-light/80">
       {title && (
-        <h2 id={labelledBy} className="label mb-6 text-muted">
+        <h2 id={labelledBy} className="relative mb-6 pb-3 font-display text-[16px] font-semibold uppercase tracking-wide text-cocoa-umber after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-8 after:bg-gold-medium">
           {title}
         </h2>
       )}
@@ -50,7 +50,7 @@ export function BlogSidebar({
   className,
 }: BlogSidebarProps) {
   return (
-    <aside aria-label="Blog sidebar" className={cn("flex flex-col gap-6 lg:pl-12", className)}>
+    <aside aria-label="Blog sidebar" className={cn("flex flex-col gap-6", className)}>
       {/* Search — a plain GET form, so it works with JavaScript disabled. */}
       <Widget>
         <form action="/blog" className="relative">
@@ -63,11 +63,11 @@ export function BlogSidebar({
             name="q"
             defaultValue={search}
             placeholder="Search"
-            className="h-[46px] w-full border border-line bg-white pl-4 pr-[54px] text-[14px] text-espresso placeholder:text-muted/60 focus:border-champagne focus:outline-none"
+            className="h-[46px] w-full rounded-md border border-line bg-white pl-4 pr-[54px] text-[14px] text-espresso placeholder:text-muted/60 focus:border-champagne focus:outline-none"
           />
           <button
             type="submit"
-            className="absolute right-0 top-0 grid size-[46px] place-items-center bg-espresso text-ivory transition-colors hover:bg-espresso-light"
+            className="absolute right-0 top-0 grid size-[46px] place-items-center rounded-r-md bg-espresso text-ivory transition-colors hover:bg-espresso-light"
           >
             <svg viewBox="0 0 16 16" aria-hidden className="size-[16px] fill-current">
               <path d="M11.74 10.34a6 6 0 1 0-1.4 1.4l3.2 3.2a1 1 0 0 0 1.4-1.4l-3.2-3.2ZM6.5 10.5a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z" />
@@ -93,10 +93,10 @@ export function BlogSidebar({
                       width={64}
                       height={64}
                       sizes="64px"
-                      className="size-16 shrink-0 object-cover"
+                      className="size-16 shrink-0 rounded-lg object-cover"
                     />
                   ) : (
-                    <span aria-hidden className="size-16 shrink-0 bg-sand" />
+                    <span aria-hidden className="size-16 shrink-0 rounded-lg bg-sand" />
                   )}
 
                   <div className="min-w-0">

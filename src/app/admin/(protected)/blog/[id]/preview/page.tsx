@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCurrentUser } from "@/lib/dal";
 import { can } from "@/lib/permissions";
+import { isObjectId } from "@/lib/utils";
 import { getBlogPostByIdAdmin } from "@/services/blog.service";
 import { asPopulatedMedia } from "@/types/media";
 import { BlogImageViewer } from "../../blog-image-viewer";
@@ -17,7 +18,7 @@ export default async function BlogPreviewPage({ params }: { params: Promise<{ id
   if (!can(user.role, "read", "blog")) notFound();
 
   const { id } = await params;
-  if (!/^[a-f\d]{24}$/i.test(id)) notFound();
+  if (!isObjectId(id)) notFound();
   const post = await getBlogPostByIdAdmin(id);
   if (!post) notFound();
   const image = asPopulatedMedia(post.featuredImage);

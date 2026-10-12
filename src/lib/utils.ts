@@ -76,3 +76,8 @@ export function toDateTimeAttr(value: Date | string | null | undefined): string 
   const date = value instanceof Date ? value : new Date(value);
   return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
 }
+
+/** A 24-hex-char MongoDB ObjectId — checked before ids from URLs/forms reach a query. */
+export function isObjectId(value: unknown): value is string {
+  return typeof value === "string" && /^[a-f\d]{24}$/i.test(value);
+}

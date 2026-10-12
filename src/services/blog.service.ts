@@ -42,12 +42,13 @@ export async function listBlogPostsAdmin(params: {
   const { page, limit, skip } = getPagination(params);
   const filter: Record<string, unknown> = {};
   if (params.status) filter.status = params.status;
-  if (params.search) filter.title = { $regex: params.search, $options: "i" };
+  if (params.search) filter.title = { $regex: escapeRegExp(params.search), $options: "i" };
 
   const [items, count] = await Promise.all([
     BlogPost.find(filter)
-      .select("title slug status publishedAt updatedAt featuredImage")
+      .select("title slug status publishedAt updatedAt featuredImage author authorName")
       .populate("featuredImage")
+      .populate("author", "name")
       .sort({ updatedAt: -1 })
       .skip(skip)
       .limit(limit)
@@ -60,7 +61,15 @@ export async function listBlogPostsAdmin(params: {
 
 export async function getBlogPostByIdAdmin(id: string) {
   await connectToDatabase();
-  return BlogPost.findById(id).populate("featuredImage").lean();
+  return BlogPost.findById(id).populate("featuredImage").populate("author", "name").lean();
+}
+
+/** Slugs are unique per post; `excludeId` lets a post keep its own slug on edit. */
+export async function isBlogSlugTaken(slug: string, excludeId?: string): Promise<boolean> {
+  await connectToDatabase();
+  const filter: Record<string, unknown> = { slug };
+  if (excludeId) filter._id = { $ne: excludeId };
+  return (await BlogPost.exists(filter)) !== null;
 }
 
 export async function getPublishedBlogPostBySlug(slug: string) {
@@ -145,7 +154,7 @@ export async function listPublishedBlogPosts(
       .populate("featuredImage")
       .populate("author", "name")
       .populate("category", "name slug")
-      .select("title slug excerpt featuredImage publishedAt readingTime author category")
+      .select("title slug excerpt featuredImage publishedAt readingTime author authorName category")
       .sort({ publishedAt: -1, _id: -1 })
       .skip(skip)
       .limit(limit)
@@ -179,7 +188,9 @@ export async function listPublishedBlogSlugs() {
 
 export async function createBlogPost(input: BlogPostInput, userId: string) {
   await connectToDatabase();
-  const publishedAt = input.status === "PUBLISHED" ? new Date() : undefined;
+  // An explicit date wins (a future one schedules the post); otherwise a post
+  // published straight away is dated now and a draft stays undated.
+  const publishedAt = input.publishedAt ?? (input.status === "PUBLISHED" ? new Date() : undefined);
 
   return BlogPost.create({
     ...input,
@@ -197,13 +208,15 @@ export async function updateBlogPost(id: string, input: BlogPostInput, userId: s
   const existing = await BlogPost.findById(id);
   if (!existing) return null;
 
-  const becamePublished = input.status === "PUBLISHED" && existing.status !== "PUBLISHED";
+  const fallbackDate = input.status === "PUBLISHED" ? new Date() : undefined;
 
   existing.set({
     ...input,
     featuredImage: input.featuredImage || undefined,
     readingTime: estimateReadingTime(input.content),
-    publishedAt: becamePublished ? new Date() : existing.publishedAt,
+    // Keep the original date across edits and unpublish/republish cycles
+    // unless the editor sets a new one.
+    publishedAt: input.publishedAt ?? existing.publishedAt ?? fallbackDate,
     updatedBy: userId,
   });
 
@@ -219,7 +232,7 @@ export async function setBlogPostStatus(id: string, status: ContentStatus, userI
   existing.set({
     status,
     updatedBy: userId,
-    publishedAt: status === "PUBLISHED" ? new Date() : existing.publishedAt,
+    publishedAt: status === "PUBLISHED" ? (existing.publishedAt ?? new Date()) : existing.publishedAt,
   });
 
   await existing.save();

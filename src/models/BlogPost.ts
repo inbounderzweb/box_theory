@@ -9,6 +9,9 @@ const blogPostSchema = new Schema(
     content: { type: String, required: true },
     featuredImage: { type: Schema.Types.ObjectId, ref: "Media" },
     author: { type: Schema.Types.ObjectId, ref: "User" },
+    // Byline shown on the site. Falls back to the populated `author` user's
+    // name when empty, so posts created before this field still render one.
+    authorName: { type: String, trim: true },
     category: { type: Schema.Types.ObjectId, ref: "Category" },
     tags: { type: [Schema.Types.ObjectId], ref: "Tag", default: [] },
     readingTime: { type: Number },

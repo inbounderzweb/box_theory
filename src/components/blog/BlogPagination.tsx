@@ -44,7 +44,7 @@ function windowFor(page: number, pages: number): number[] {
  * still beat the current page's `bg-teal` in the stylesheet's own order.
  */
 const CELL =
-  "grid h-[36px] min-w-[36px] place-items-center border " +
+  "grid h-[36px] min-w-[36px] place-items-center rounded-md border " +
   "px-[10px] text-[14px] font-medium transition-colors sm:h-[42px] sm:min-w-[42px] sm:text-[16px]";
 
 const LINK = "border-line bg-white text-espresso hover:border-champagne hover:bg-champagne hover:text-espresso";
