@@ -122,7 +122,11 @@ export function Header() {
   useEffect(() => resetTransientState, [resetTransientState]);
 
   useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 24);
+    // Separate on/off thresholds. The compact bar is up to 24px shorter, and on
+    // inner pages (sticky, in-flow header) that shrink moves the scroll position
+    // back by the same amount. A single threshold let that shift flip the state
+    // back and forth every frame, making the header flicker.
+    const update = () => setScrolled(previous => (previous ? window.scrollY > 10 : window.scrollY > 80));
     update();
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
