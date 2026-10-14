@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SITE } from "@/lib/content";
 import styles from "./IndustriesCarousel.module.css";
 
@@ -59,20 +59,50 @@ function Arrow({ direction = "diagonal" }: { direction?: "previous" | "next" | "
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={path} /></svg>;
 }
 
-/** An industry explorer with manual selection and no automatic content changes. */
+/**
+ * An industry explorer that auto-advances through the industries. The
+ * progress bar's CSS animation is the timer: when it finishes, the next
+ * industry is shown, so the bar and the content change can never drift apart.
+ * Pausing the animation (hover, keyboard focus, off-screen, the pause button)
+ * pauses autoplay where it stands, and reduced motion disables it entirely
+ * because that media query removes the animation.
+ */
 export function IndustriesCarousel({ cards }: { cards: IndustryCard[] }) {
   const [activeId, setActiveId] = useState(cards[0]?.id ?? "");
+  const [paused, setPaused] = useState(false);
+  const [hovering, setHovering] = useState(false);
+  const [keyboardFocus, setKeyboardFocus] = useState(false);
+  const [inView, setInView] = useState(false);
+  // Only manual picks are announced — a live region firing on every
+  // automatic change would talk over screen-reader users constantly.
+  const [announcement, setAnnouncement] = useState("");
+  const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.25 });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   const index = Math.max(0, cards.findIndex(card => card.id === activeId));
   const selected = cards[index];
   if (!selected) return null;
 
+  const running = !paused && !hovering && !keyboardFocus && inView;
   const pad = (n: number) => String(n).padStart(2, "0");
-  const go = (offset: number) => setActiveId(cards[(index + offset + cards.length) % cards.length].id);
+  const choose = (id: string) => {
+    setActiveId(id);
+    setAnnouncement(`${cards.find(card => card.id === id)?.name ?? ""} selected.`);
+  };
+  const go = (offset: number) => choose(cards[(index + offset + cards.length) % cards.length].id);
+  const advance = () => setActiveId(cards[(index + 1) % cards.length].id);
   const enquiry = `mailto:${SITE.email}?subject=${encodeURIComponent(`Packaging enquiry — ${selected.name}`)}`;
 
   return (
-    <section id="industries" aria-labelledby="industries-title" className={styles.section}>
+    <section ref={sectionRef} id="industries" aria-labelledby="industries-title" className={styles.section}>
       <div className={styles.container}>
         <motion.div
           data-reveal
@@ -96,13 +126,21 @@ export function IndustriesCarousel({ cards }: { cards: IndustryCard[] }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: reduceMotion ? 0 : 0.9, delay: reduceMotion ? 0 : 0.12, ease: EASE }}
+          // Mouse only: on touch screens "hover" sticks after a tap and would
+          // stop autoplay for good.
+          onPointerEnter={event => { if (event.pointerType === "mouse") setHovering(true); }}
+          onPointerLeave={() => setHovering(false)}
+          // Hold while a keyboard user is inside, but not after a mouse click
+          // leaves focus on a button.
+          onFocus={event => { if (event.target.matches(":focus-visible")) setKeyboardFocus(true); }}
+          onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setKeyboardFocus(false); }}
         >
           <div className={styles.directory}>
             <div className={styles.directoryHeading}><h3>Find your industry.</h3><span>{pad(index + 1)} <span>/ {pad(cards.length)}</span></span></div>
             <p className={styles.directoryHint}>Different products. Different priorities. Select yours.</p>
             <ul className={styles.sectorList} aria-label="Select an industry">
               {cards.map((card, i) => <li key={card.id}>
-                <button type="button" className={styles.sector} aria-pressed={selected.id === card.id} aria-controls="industry-preview" onClick={() => setActiveId(card.id)}>
+                <button type="button" className={styles.sector} aria-pressed={selected.id === card.id} aria-controls="industry-preview" onClick={() => choose(card.id)}>
                   <span className={styles.sectorNumber}>{pad(i + 1)}</span><span className={styles.sectorName}>{card.name}</span><span className={styles.sectorArrow}><Arrow /></span>
                 </button>
               </li>)}
@@ -110,7 +148,7 @@ export function IndustriesCarousel({ cards }: { cards: IndustryCard[] }) {
             <div className={styles.mobilePicker}>
               <label htmlFor="industry-select">EXPLORE YOUR INDUSTRY</label>
               <div className={styles.pickerControls}>
-                <div className={styles.selectWrap}><select id="industry-select" value={selected.id} onChange={event => setActiveId(event.target.value)} aria-controls="industry-preview">{cards.map((card, i) => <option value={card.id} key={card.id}>{pad(i + 1)} — {card.name}</option>)}</select><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" aria-hidden="true"><path d="m4 6 4 4 4-4" /></svg></div>
+                <div className={styles.selectWrap}><select id="industry-select" value={selected.id} onChange={event => choose(event.target.value)} aria-controls="industry-preview">{cards.map((card, i) => <option value={card.id} key={card.id}>{pad(i + 1)} — {card.name}</option>)}</select><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" aria-hidden="true"><path d="m4 6 4 4 4-4" /></svg></div>
                 <button type="button" onClick={() => go(-1)} aria-label="Previous industry"><Arrow direction="previous" /></button>
                 <button type="button" onClick={() => go(1)} aria-label="Next industry"><Arrow direction="next" /></button>
               </div>
@@ -125,7 +163,35 @@ export function IndustriesCarousel({ cards }: { cards: IndustryCard[] }) {
               </motion.div>
             </AnimatePresence>
             <div className={styles.shade} aria-hidden="true" />
-            <div className={styles.previewTop}><span className={styles.previewBadge}><Icon id={selected.id} />TAILORED TO YOUR WORLD</span><span className={styles.previewNumber}>{pad(index + 1)}<span> / {pad(cards.length)}</span></span></div>
+            {!reduceMotion && (
+              <span className={styles.progress} aria-hidden="true">
+                {/* Re-keyed per industry so every change, manual or automatic, restarts the timer. */}
+                <span
+                  key={selected.id}
+                  className={styles.progressFill}
+                  style={{ animationPlayState: running ? "running" : "paused" }}
+                  onAnimationEnd={advance}
+                />
+              </span>
+            )}
+            <div className={styles.previewTop}>
+              <span className={styles.previewBadge}><Icon id={selected.id} />TAILORED TO YOUR WORLD</span>
+              <div className={styles.previewMeta}>
+                <span className={styles.previewNumber}>{pad(index + 1)}<span> / {pad(cards.length)}</span></span>
+                {!reduceMotion && (
+                  <button
+                    type="button"
+                    className={styles.autoplayToggle}
+                    onClick={() => setPaused(value => !value)}
+                    aria-label={paused ? "Play industries slideshow" : "Pause industries slideshow"}
+                  >
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d={paused ? "M8 5.5v13l10.5-6.5L8 5.5Z" : "M7 5h3.5v14H7V5Zm6.5 0H17v14h-3.5V5Z"} />
+                    </svg>
+                  </button>
+                )}
+              </div>
+            </div>
             <div className={styles.previewContent}>
               <motion.div key={selected.id} initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 9 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.55, ease: EASE }}>
                 <h3 id="industry-preview-title" className={styles.previewTitle}>{selected.name}</h3>
@@ -138,7 +204,7 @@ export function IndustriesCarousel({ cards }: { cards: IndustryCard[] }) {
         </motion.div>
 
         <div className={styles.footer}><p><span className={styles.footerDot} aria-hidden="true" />From everyday essentials to extraordinary brands.</p><a href="#enquire">Let’s find your fit<Arrow /></a></div>
-        <p className={styles.srOnly} role="status" aria-atomic="true">{selected.name} selected.</p>
+        <p className={styles.srOnly} role="status" aria-atomic="true">{announcement}</p>
       </div>
     </section>
   );

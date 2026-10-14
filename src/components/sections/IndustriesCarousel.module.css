@@ -43,7 +43,17 @@
 .previewTop { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 25px 26px; }
 .previewBadge { display: inline-flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 4px; background: #211710b8; color: white; font-size: 9px; letter-spacing: .1em; }
 .previewBadge svg { width: 23px; height: 23px; }
+.previewMeta { display: flex; align-items: center; gap: 12px; }
 .previewNumber { color: white; font-size: 13px; font-variant-numeric: tabular-nums; }
+/* Autoplay timer: the fill's animationend advances to the next industry, so
+   the duration below is the time each industry stays on screen. */
+.progress { position: absolute; top: 0; inset-inline: 0; height: 3px; background: #fff8e62e; overflow: hidden; }
+.progressFill { display: block; height: 100%; background: #d7c29f; transform: scaleX(0); transform-origin: left; animation: industryProgress 3s linear forwards; }
+@keyframes industryProgress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.autoplayToggle { display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid #fff8e659; border-radius: 50%; background: #211710b8; color: #fff8e6; cursor: pointer; transition: background .3s; }
+.autoplayToggle:hover { background: #594939; }
+.autoplayToggle:focus-visible { outline: 2px solid #d7c29f; outline-offset: 2px; }
+.autoplayToggle svg { width: 13px; height: 13px; }
 .previewNumber > span { font-size: 10px; color: #ffffffb3; }
 .previewContent { position: absolute; bottom: 0; inset-inline: 0; padding: 30px; }
 .section .previewTitle { color: #fffaf1; font-family: var(--font-display); font-size: clamp(30px, 3vw, 42px); font-weight: 500; line-height: 1.13; letter-spacing: -.04em; }
@@ -105,6 +115,8 @@
   .preview { min-height: 470px; border-radius: 8px; }
   .previewTop { padding: 20px; gap: 12px; }
   .previewBadge { font-size: 8px; gap: 8px; letter-spacing: .05em; }
+  .previewMeta { gap: 10px; }
+  .autoplayToggle { width: 36px; height: 36px; }
   .previewContent { padding: 22px; }
   .section .previewTitle { font-size: 31px; }
   .description { font-size: 12px; margin-top: 12px; }
