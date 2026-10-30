@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SITE } from "@/lib/content";
 import styles from "./IndustriesDirectory.module.css";
 
@@ -54,11 +54,24 @@ function LineIcon({ path }: { path: string }) {
 export function IndustriesDirectory() {
   const [active, setActive] = useState(0);
   const reduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Pin at the top; if the section is taller than the viewport, pin once its bottom is visible.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const update = () => el.style.setProperty("--pin-top", `${Math.min(0, window.innerHeight - el.offsetHeight)}px`);
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    window.addEventListener("resize", update);
+    return () => { ro.disconnect(); window.removeEventListener("resize", update); };
+  }, []);
   const selected = CONSIDERATIONS[active];
   const quoteHref = `mailto:${SITE.email}?subject=${encodeURIComponent("Custom corrugated packaging enquiry")}&body=${encodeURIComponent("Hello Box Theory,\n\nI would like to discuss corrugated packaging for my product.\n\nProduct:\nDimensions (length × width × height):\nEstimated quantity:\nPrint requirements:\nDelivery location:\n\nThank you.")}`;
 
   return (
-    <section id="corrugated-packaging" className={styles.section} aria-labelledby="industries-directory-title">
+    <section ref={sectionRef} id="corrugated-packaging" className={styles.section} aria-labelledby="industries-directory-title">
       <div className={styles.container}>
         <div className={styles.layout}>
           <motion.div

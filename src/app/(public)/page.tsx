@@ -3,6 +3,7 @@ import { IndustriesDirectory } from "@/components/sections/IndustriesDirectory";
 import { IndustriesServed } from "@/components/sections/IndustriesServed";
 import { FeaturedProducts } from "@/components/sections/FeaturedProducts";
 import { ProcessJourney } from "@/components/sections/ProcessJourney";
+import { HeroVideo } from "@/components/sections/HeroVideo";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { SITE } from "@/lib/content";
 
@@ -28,12 +29,15 @@ export default function Page() {
   const { props: heroMobile } = getImageProps({ ...common, src: "/images/hero_section/mobile_banner.png", sizes: "100vw" });
   return (
     <div className="roofer-home">
+      {/* Hero stays pinned while the next sections slide over it; the wrapper releases it once covered. */}
+      <div className="roofer-hero-stack">
       <section className="roofer-hero" aria-labelledby="hero-title">
         <picture>
           <source media="(max-width: 767px)" srcSet={heroMobile.srcSet} />
           <source media="(min-width: 768px)" srcSet={heroDesktop.srcSet} />
           <img {...heroDesktop} alt={HERO_ALT} className="roofer-hero-image" />
         </picture>
+        <HeroVideo />
         <div className="roofer-container roofer-hero-content">
           {/* <p className="roofer-eyebrow"><span /> PACKAGING CONSULTANCY & EXECUTION</p> */}
           <h1 id="hero-title">
@@ -61,12 +65,15 @@ export default function Page() {
       </section>
 
       <WhyChooseUs />
+      </div>
 
       <IndustriesServed />
 
-      <IndustriesDirectory />
-
-      <ProcessJourney />
+      {/* Wrapper bounds the pinned corrugated section so it releases once the next section has covered it. */}
+      <div>
+        <IndustriesDirectory />
+        <ProcessJourney />
+      </div>
 
       <FeaturedProducts />
 

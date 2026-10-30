@@ -411,6 +411,10 @@
 .roofer-skip:focus { top: 10px; z-index: 50; }
 .roofer-hero { position: relative; isolation: isolate; background: #4a3831; overflow: hidden; color: white; min-height: 100vh; min-height: 100svh; display: flex; align-items: flex-end; }
 .roofer-hero > picture { position: absolute; inset: 0; z-index: -2; }
+/* With motion allowed the video replaces the image, so the image never flashes on refresh. */
+@media (prefers-reduced-motion: no-preference) { .roofer-hero > picture { display: none; } }
+.roofer-hero-video { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 72% center; }
+@media (max-width: 767px) { .roofer-hero-video { object-position: 62% center; } }
 .roofer-hero-image { width: 100%; height: 100%; object-fit: cover; object-position: 72% center; }
 .roofer-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 34% 46% at 20% 68%, #4a3831b8 0%, #4a383100 100%), radial-gradient(ellipse 20% 26% at 9% 92%, #4a38319e 0%, #4a383100 100%), radial-gradient(ellipse 18% 24% at 36% 58%, #4a383166 0%, #4a383100 100%), radial-gradient(ellipse 16% 20% at 28% 90%, #4a383173 0%, #4a383100 100%); filter: blur(14px); }
 .roofer-hero-content, .roofer-header-text { text-shadow: 0 1px 14px #4a383180; }
@@ -530,6 +534,16 @@
   .roofer-hero-note { margin-top: clamp(16px, 3vh, 30px); }
 }
 
+/* Mobile: heading and copy sit at the top; both CTAs and the note stay at the bottom. */
+@media (max-width: 767px) {
+  .roofer-hero { align-items: flex-start; }
+  .roofer-container.roofer-hero-content { display: flex; flex-direction: column; align-items: flex-start; min-height: 100vh; min-height: 100svh; padding-block: clamp(96px, 15vh, 120px) clamp(28px, 5vh, 48px); }
+  .roofer-hero .roofer-actions { display: contents; }
+  .roofer-hero .roofer-button { margin-top: auto; }
+  .roofer-hero .roofer-text-link { margin-top: 18px; }
+  .roofer-hero-note { margin-top: clamp(16px, 3vh, 30px); }
+}
+
 /* Hero motion uses the existing CSS system; the approved layout stays unchanged. */
 @keyframes hero-rise {
   from { opacity: 0; transform: translateY(var(--hero-rise-distance, 18px)); }
@@ -646,3 +660,8 @@
   .roofer-faq-item:hover { padding-inline: 0; }
   .roofer-enquiry .roofer-button:hover > span, .roofer-faq .roofer-text-link:hover span { transform: none; }
 }
+
+/* Layered landing: hero pins (video keeps playing) while the following sections slide up over it. */
+.roofer-hero-stack > .roofer-hero { position: sticky; top: 0; z-index: 0; }
+.roofer-hero-stack > :not(.roofer-hero) { position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce) { .roofer-hero-stack > .roofer-hero { position: relative; } }

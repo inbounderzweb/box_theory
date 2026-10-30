@@ -1,4 +1,4 @@
-.section { position: relative; overflow: clip; background: #fcfbf8; color: var(--color-cocoa-umber); padding-block: 96px 62px; }
+.section { position: sticky; top: var(--pin-top, 0px); z-index: 1; overflow: clip; background: #fcfbf8; color: var(--color-cocoa-umber); padding-block: 96px 62px; }
 .container { width: min(1280px, calc(100% - 96px)); margin-inline: auto; }
 .layout { display: grid; grid-template-columns: 1fr 1.12fr; gap: 70px; align-items: start; }
 .eyebrow { display: flex; align-items: center; gap: 11px; margin-bottom: 23px; color: #79664a; font-size: 10px; font-weight: 500; letter-spacing: .17em; }
@@ -150,3 +150,6 @@
 @media (hover: none), (prefers-reduced-motion: reduce) {
   .consideration:hover .optionIcon, .consideration:hover strong { transform: none; }
 }
+
+/* Layered scroll: section pins at the top (--pin-top lifts it when taller than the viewport); the next section slides over it. */
+@media (prefers-reduced-motion: reduce) { .section { position: relative; top: auto; } }
