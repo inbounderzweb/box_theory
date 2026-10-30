@@ -107,3 +107,15 @@
   .heroCard:hover .cutout, .heroCard:focus-within .cutout { transform: translateY(0) rotate(-7deg) scale(.95); }
   .card:hover .cornerMark, .card:focus-within .cornerMark { rotate: 0deg; }
 }
+/* Interaction polish: cards lift with a soft shadow, the product link underline grows. */
+.card { transition: transform .6s cubic-bezier(.22, 1, .36, 1); }
+.card:hover { transform: translateY(-6px); }
+.visual { transition: box-shadow .6s cubic-bezier(.22, 1, .36, 1); }
+.card:hover .visual, .card:focus-within .visual { box-shadow: 0 30px 50px -30px #4a383160; }
+.cardBody h3 { transition: color .3s; }
+.card:hover .cardBody h3 { color: #7d6030; }
+.customNote { transition: background .4s, transform .5s cubic-bezier(.22, 1, .36, 1); }
+.customNote:hover { background: #f1ebdf; transform: translateY(-2px); }
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .card:hover, .customNote:hover { transform: none; }
+}

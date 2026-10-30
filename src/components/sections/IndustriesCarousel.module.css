@@ -141,3 +141,19 @@
   .imageLayer { transform: none !important; }
   .sector:hover .sectorName, .previewLink:hover .ctaArrow, .footer a:hover svg { transform: none; }
 }
+/* Interaction polish: gentle image zoom, row nudge and a soft tint on unselected hover. */
+.preview .image { transition: scale 1.2s cubic-bezier(.22, 1, .36, 1); }
+.preview:hover .image { scale: 1.04; }
+.preview { transition: box-shadow .5s, border-color .5s; }
+.preview:hover { border-color: #d0b58a55; box-shadow: 0 28px 60px -34px #00000099; }
+.sector:not([aria-pressed="true"]):hover::before { opacity: .14; transform: scaleX(1); }
+.sector:hover .sectorNumber { color: #e0cba2; }
+.priorities li { transition: background .3s, border-color .3s, transform .4s cubic-bezier(.22, 1, .36, 1); }
+.priorities li:hover { background: #d7c29f2e; border-color: #fff8e68c; transform: translateY(-2px); }
+.footer > a { transition: color .3s; }
+.footer > a:hover { color: #fff8e6; }
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .preview:hover .image { scale: 1; }
+  .priorities li:hover { transform: none; }
+}
+.footer > a { margin-left: auto; }

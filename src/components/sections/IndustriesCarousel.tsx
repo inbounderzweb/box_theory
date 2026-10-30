@@ -69,7 +69,6 @@ function Arrow({ direction = "diagonal" }: { direction?: "previous" | "next" | "
  */
 export function IndustriesCarousel({ cards }: { cards: IndustryCard[] }) {
   const [activeId, setActiveId] = useState(cards[0]?.id ?? "");
-  const [paused, setPaused] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [keyboardFocus, setKeyboardFocus] = useState(false);
   const [inView, setInView] = useState(false);
@@ -91,7 +90,7 @@ export function IndustriesCarousel({ cards }: { cards: IndustryCard[] }) {
   const selected = cards[index];
   if (!selected) return null;
 
-  const running = !paused && !hovering && !keyboardFocus && inView;
+  const running = !hovering && !keyboardFocus && inView;
   const pad = (n: number) => String(n).padStart(2, "0");
   const choose = (id: string) => {
     setActiveId(id);
@@ -116,7 +115,6 @@ export function IndustriesCarousel({ cards }: { cards: IndustryCard[] }) {
             <p className={styles.eyebrow}><span aria-hidden="true" />INDUSTRIES SERVED</p>
             <h2 id="industries-title" className={styles.title}>Industries We <span>Serve.</span></h2>
           </div>
-          <div className={styles.intro}><p>Packaging solutions tailored<br />for every industry.</p><span>YOUR WORLD. OUR PACKAGING EXPERTISE.</span></div>
         </motion.div>
 
         <motion.div
@@ -137,7 +135,6 @@ export function IndustriesCarousel({ cards }: { cards: IndustryCard[] }) {
         >
           <div className={styles.directory}>
             <div className={styles.directoryHeading}><h3>Find your industry.</h3><span>{pad(index + 1)} <span>/ {pad(cards.length)}</span></span></div>
-            <p className={styles.directoryHint}>Different products. Different priorities. Select yours.</p>
             <ul className={styles.sectorList} aria-label="Select an industry">
               {cards.map((card, i) => <li key={card.id}>
                 <button type="button" className={styles.sector} aria-pressed={selected.id === card.id} aria-controls="industry-preview" onClick={() => choose(card.id)}>
@@ -153,7 +150,6 @@ export function IndustriesCarousel({ cards }: { cards: IndustryCard[] }) {
                 <button type="button" onClick={() => go(1)} aria-label="Next industry"><Arrow direction="next" /></button>
               </div>
             </div>
-            <div className={styles.directoryFooter}><span className={styles.boxMark} aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="m16 3 12 7v13l-12 7-12-7V10l12-7Zm0 14 12-7M4 10l12 7v13M10 6.5l12 7v7" /></svg></span><p>Built around your product.<br /><span>Considered at every step.</span></p></div>
           </div>
 
           <div id="industry-preview" role="region" aria-labelledby="industry-preview-title" className={styles.preview}>
@@ -178,18 +174,6 @@ export function IndustriesCarousel({ cards }: { cards: IndustryCard[] }) {
               <span className={styles.previewBadge}><Icon id={selected.id} />TAILORED TO YOUR WORLD</span>
               <div className={styles.previewMeta}>
                 <span className={styles.previewNumber}>{pad(index + 1)}<span> / {pad(cards.length)}</span></span>
-                {!reduceMotion && (
-                  <button
-                    type="button"
-                    className={styles.autoplayToggle}
-                    onClick={() => setPaused(value => !value)}
-                    aria-label={paused ? "Play industries slideshow" : "Pause industries slideshow"}
-                  >
-                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                      <path d={paused ? "M8 5.5v13l10.5-6.5L8 5.5Z" : "M7 5h3.5v14H7V5Zm6.5 0H17v14h-3.5V5Z"} />
-                    </svg>
-                  </button>
-                )}
               </div>
             </div>
             <div className={styles.previewContent}>
@@ -203,7 +187,7 @@ export function IndustriesCarousel({ cards }: { cards: IndustryCard[] }) {
           </div>
         </motion.div>
 
-        <div className={styles.footer}><p><span className={styles.footerDot} aria-hidden="true" />From everyday essentials to extraordinary brands.</p><a href="#enquire">Let’s find your fit<Arrow /></a></div>
+        <div className={styles.footer}><a href="#enquire">Let’s find your fit<Arrow /></a></div>
         <p className={styles.srOnly} role="status" aria-atomic="true">{announcement}</p>
       </div>
     </section>

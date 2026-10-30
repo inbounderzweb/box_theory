@@ -95,3 +95,12 @@
   .section [data-reveal] { opacity: 1 !important; transform: none !important; }
   .tab:hover .stepNumber, .nextStep:hover svg { transform: none; }
 }
+/* Interaction polish. */
+.details { transition: box-shadow .5s, border-color .5s, transform .5s cubic-bezier(.22, 1, .36, 1); }
+.details:hover { border-color: #c4b28f; box-shadow: 0 22px 44px -30px #4a383155; transform: translateY(-2px); }
+.tab:hover .stepTitle { color: var(--color-cocoa-umber); }
+.illustration { transition: filter .5s; }
+.artwork:hover .illustration { filter: drop-shadow(0 16px 16px #4a383122); }
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .details:hover { transform: none; }
+}

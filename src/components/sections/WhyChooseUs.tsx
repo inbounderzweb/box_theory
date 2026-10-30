@@ -7,8 +7,6 @@ import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const LEAD = ["Packaging is not just a box. It is the journey of your product", "from your warehouse to your customer."] as const;
-
 // Line-icon paths on a 24x24 grid, drawn with a 1.6 stroke.
 const ICONS = {
   people: "M9 11a2.6 2.6 0 1 0 0-5.2A2.6 2.6 0 0 0 9 11Zm-5.5 8c0-3.1 2.4-5.2 5.5-5.2s5.5 2.1 5.5 5.2M17 10.2a2.2 2.2 0 1 0 0-4.4M17.2 13.9c2.1.3 3.5 2 3.5 4.4",
@@ -81,7 +79,6 @@ export function WhyChooseUs() {
           <motion.h2 {...rise(0.1)} id="why-choose-title" className="font-display text-[clamp(34px,5vw,64px)] font-semibold leading-[1.04] tracking-[-.035em]">
             <span className="text-[#d4b06c]">Packaging</span> intelligence <br className="max-sm:hidden" />that moves your <br className="max-sm:hidden" />business forward.
           </motion.h2>
-          <motion.p {...rise(0.25)} className="mt-6 max-w-[34em] text-[clamp(16px,1.4vw,20px)] leading-[1.55] text-gold-lightest/90 md:mt-7">{LEAD[0]} <br className="max-sm:hidden" />{LEAD[1]}</motion.p>
 
           <ul className="mt-9 grid gap-3.5 min-[640px]:grid-cols-2 lg:grid-cols-3 lg:gap-[18px] md:mt-11">
             {CARDS.map((card, index) => (

@@ -141,3 +141,12 @@
   .product { transform: none !important; }
   .primaryCta:hover svg { transform: none; }
 }
+/* Interaction polish. */
+.consideration:not([aria-pressed="true"]):hover::before { opacity: .55; transform: none; }
+.consideration:hover .optionIcon { border-color: #8c7146; transform: scale(1.06); }
+.optionIcon { transition: background .35s, color .35s, border-color .35s, transform .45s cubic-bezier(.22, 1, .36, 1); }
+.consideration strong { transition: transform .45s cubic-bezier(.22, 1, .36, 1); }
+.consideration:hover strong { transform: translateX(3px); }
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .consideration:hover .optionIcon, .consideration:hover strong { transform: none; }
+}

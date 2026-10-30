@@ -586,3 +586,63 @@
   .roofer-hero-word, .roofer-hero-copy, .roofer-hero .roofer-actions, .roofer-hero-note > p, .roofer-hero .roofer-note-icon { animation: none !important; opacity: 1; transform: none; }
   .roofer-hero .roofer-button, .roofer-hero .roofer-text-link, .roofer-hero .roofer-button > span, .roofer-hero .roofer-text-link > span { transition: none !important; transform: none !important; }
 }
+
+/* ---------------------------------------------------------------------------
+   Homepage layered scroll + lower-section interactions
+   The hero stays pinned while the marquee and every section after it slide up
+   over it (those sections are already opaque and z-index 1). Gated to screens
+   tall enough to hold the whole hero, so its content is never trapped under
+   the sections that cover it.
+--------------------------------------------------------------------------- */
+@media (min-width: 768px) and (min-height: 620px) {
+  .roofer-hero { position: sticky; top: 0; z-index: 0; }
+}
+
+@keyframes roofer-hero-recede { to { transform: scale(1.08); filter: brightness(.6); } }
+@keyframes roofer-hero-lift { to { transform: translateY(-48px); opacity: .15; } }
+@keyframes roofer-rise { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: none; } }
+
+/* Scroll-driven extras are progressive enhancement: browsers without animation-timeline just skip them. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    @media (min-width: 768px) and (min-height: 620px) {
+      .roofer-hero > picture { animation: roofer-hero-recede linear both; animation-timeline: scroll(root block); animation-range: 0 100svh; will-change: transform; }
+      .roofer-hero-content { animation: roofer-hero-lift linear both; animation-timeline: scroll(root block); animation-range: 0 70svh; }
+    }
+    .roofer-faq .roofer-split > div,
+    .roofer-faq-item,
+    .roofer-enquiry .roofer-container > div { animation: roofer-rise linear both; animation-timeline: view(); animation-range: entry 0% entry 45%; }
+    .roofer-faq-item:nth-child(n + 2) { animation-range: entry 5% entry 50%; }
+  }
+}
+
+/* FAQ: smooth open/close where the browser can animate to auto height. */
+@supports (interpolate-size: allow-keywords) {
+  .roofer-faq-item { interpolate-size: allow-keywords; }
+  .roofer-faq-item::details-content { block-size: 0; overflow: clip; transition: block-size .45s cubic-bezier(.22, 1, .36, 1), content-visibility .45s allow-discrete; }
+  .roofer-faq-item[open]::details-content { block-size: auto; }
+}
+.roofer-faq-item { transition: background-color .35s, padding-inline .45s cubic-bezier(.22, 1, .36, 1); }
+.roofer-faq-item summary { transition: color .3s; }
+.roofer-faq-item summary span { display: inline-block; color: #b99a60; }
+.roofer-faq-item:hover { padding-inline: 14px; background: #ebe2d0; }
+.roofer-faq-item:hover summary { color: #2f221c; }
+.roofer-faq-item summary:focus-visible { outline: 2px solid #b99a60; outline-offset: 2px; }
+
+/* Enquiry strip: lift the call-to-action and nudge its arrow. */
+.roofer-enquiry .roofer-button { transition: background .25s, transform .35s cubic-bezier(.22, 1, .36, 1), box-shadow .35s; }
+.roofer-enquiry .roofer-button:hover { box-shadow: 0 14px 30px -14px #00000080; }
+.roofer-enquiry .roofer-button > span { display: inline-block; transition: transform .35s cubic-bezier(.22, 1, .36, 1); }
+.roofer-enquiry .roofer-button:hover > span { transform: translate(4px, -3px); }
+.roofer-enquiry-actions > a:last-child { transition: color .25s, opacity .25s; opacity: .85; }
+.roofer-enquiry-actions > a:last-child:hover { opacity: 1; color: #d9c29b; }
+.roofer-faq .roofer-text-link span { display: inline-block; transition: transform .3s cubic-bezier(.22, 1, .36, 1); }
+.roofer-faq .roofer-text-link:hover span { transform: translate(4px, -3px); }
+
+@media (hover: none) {
+  .roofer-faq-item:hover { padding-inline: 0; background: transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roofer-faq-item:hover { padding-inline: 0; }
+  .roofer-enquiry .roofer-button:hover > span, .roofer-faq .roofer-text-link:hover span { transform: none; }
+}
