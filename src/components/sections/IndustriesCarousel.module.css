@@ -135,6 +135,8 @@
   .pickerControls > button:first-of-type { grid-column: 2; }
   .pickerControls > button:last-of-type { grid-column: 3; }
 }
+/* Mobile: the industry dropdown and the "Discuss your packaging" link are hidden; the arrows and autoplay move through industries. */
+@media (max-width: 900px) { .selectWrap, .previewLink { display: none; } }
 @media (prefers-reduced-motion: reduce) {
   .section *, .section *::before, .section *::after { animation: none !important; transition: none !important; }
   .section [data-reveal] { opacity: 1 !important; transform: none !important; }

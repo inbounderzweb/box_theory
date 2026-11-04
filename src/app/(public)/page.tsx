@@ -3,6 +3,7 @@ import { IndustriesDirectory } from "@/components/sections/IndustriesDirectory";
 import { IndustriesServed } from "@/components/sections/IndustriesServed";
 import { FeaturedProducts } from "@/components/sections/FeaturedProducts";
 import { ProcessJourney } from "@/components/sections/ProcessJourney";
+import { ScrollEffects } from "@/components/sections/ScrollEffects";
 import { HeroVideo } from "@/components/sections/HeroVideo";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { SITE } from "@/lib/content";
@@ -29,6 +30,7 @@ export default function Page() {
   const { props: heroMobile } = getImageProps({ ...common, src: "/images/hero_section/mobile_banner.png", sizes: "100vw" });
   return (
     <div className="roofer-home">
+      <ScrollEffects />
       {/* Hero stays pinned while the next sections slide over it; the wrapper releases it once covered. */}
       <div className="roofer-hero-stack">
       <section className="roofer-hero" aria-labelledby="hero-title">

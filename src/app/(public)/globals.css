@@ -437,7 +437,7 @@
 :where(.roofer-home > section:not(#why-choose-us)) { position: relative; z-index: 1; background: #f1ebdf; }
 
 /* Branding marquee — two identical groups scroll by -50% for a seamless loop. */
-.roofer-marquee { background: #4a3831; color: #f1ebdf; overflow: hidden; border-top: 1px solid #b99a6040; padding-block: 18px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.roofer-marquee { background: #4a3831; color: #f1ebdf; overflow: hidden; border-top: 1px solid #b99a6040; padding-block: 18px; }
 .roofer-marquee-track { display: flex; width: max-content; animation: marquee 38s linear infinite; will-change: transform; }
 .roofer-marquee:hover .roofer-marquee-track { animation-play-state: paused; }
 .roofer-marquee-group { display: flex; flex-shrink: 0; align-items: center; margin: 0; padding: 0; list-style: none; }
@@ -668,3 +668,18 @@
 
 /* Hero heading and description are visually hidden but stay in the page for screen readers and SEO. */
 .roofer-hero #hero-title, .roofer-hero .roofer-hero-copy { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+/* Scroll choreography (see ScrollEffects): hero zooms and its copy lifts away as the page covers it. */
+@media (prefers-reduced-motion: no-preference) {
+  .roofer-hero-video { transform: scale(calc(1 + var(--hero-p, 0) * .14)); transform-origin: 60% 50%; will-change: transform; }
+  .roofer-hero > .roofer-hero-content { opacity: calc(1 - var(--hero-p, 0) * 1.5); transform: translate3d(0, calc(var(--hero-p, 0) * -56px), 0); will-change: transform, opacity; }
+  .roofer-home .rv { opacity: 0; transform: translate3d(0, 34px, 0); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) var(--rv-delay, 0ms), transform .9s cubic-bezier(.22, 1, .36, 1) var(--rv-delay, 0ms); }
+  .roofer-home .rv.rv-in { opacity: 1; transform: none; }
+}
+
+/* Marquee is visible on first load: the hero leaves room for the strip below it. */
+.roofer-home .roofer-hero { min-height: calc(100vh - 47px); min-height: calc(100svh - 47px); }
+.roofer-home .roofer-hero > .roofer-container.roofer-hero-content { min-height: calc(100vh - 47px); min-height: calc(100svh - 47px); }
+@media (min-width: 768px) {
+  .roofer-home .roofer-hero, .roofer-home .roofer-hero > .roofer-container.roofer-hero-content { min-height: calc(100vh - 58px); min-height: calc(100svh - 58px); }
+}
