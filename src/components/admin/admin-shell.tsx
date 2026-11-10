@@ -27,6 +27,7 @@ const NAV_ICONS: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement
   testimonials: ChatIcon,
   enquiries: MailIcon,
   media: ImageIcon,
+  banner: ImageIcon,
   settings: GearIcon,
 };
 
@@ -113,7 +114,7 @@ export function AdminShell({
             <NavLink
               key={item.href}
               href={item.href}
-              icon={NAV_ICONS[item.resource] ?? DocumentIcon}
+              icon={NAV_ICONS[item.icon ?? item.resource] ?? DocumentIcon}
               label={item.label}
               collapsed={isCollapsed}
               active={pathname === item.href || pathname.startsWith(`${item.href}/`)}

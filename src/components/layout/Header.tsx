@@ -151,7 +151,7 @@ export function Header() {
           ))}
         </nav>
         <div className={styles.actions}>
-          <Link className={styles.enquire} href="/#enquire">Let’s talk <span aria-hidden="true">↗</span></Link>
+          <Link className={styles.enquire} href="/#product-enquiry">Let’s talk <span aria-hidden="true">↗</span></Link>
           <button ref={trigger} type="button" className={styles.menuTrigger} onClick={openMenu} aria-haspopup="dialog" aria-expanded={expanded} aria-controls="box-navigation" aria-label="Open menu">
             <svg className={styles.hamburger} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true">
               <path d="M4 6h16M4 12h16M4 18h16" />
@@ -182,7 +182,7 @@ export function Header() {
                   <p className={styles.microLabel}>GOOD THINGS START WITH A BOX.</p>
                   <Parcel />
                   <h3>Think outside.<br /><span>We’ll handle the box.</span></h3>
-                  <Link href="/#enquire" className={styles.featureCta} onClick={closeMenu}>Let’s build something <span aria-hidden="true">↗</span></Link>
+                  <Link href="/#product-enquiry" className={styles.featureCta} onClick={closeMenu}>Let’s build something <span aria-hidden="true">↗</span></Link>
                 </aside>
               </div>
               <div className={styles.menuFooter}><a href={`mailto:${SITE.email}`}>{SITE.email} <span aria-hidden="true">↗</span></a><p>INDIA <span>·</span> GCC <span>·</span> BEYOND</p><span className={styles.handlingMark} aria-hidden="true">↑↑ &nbsp; HANDLE WITH IDEAS</span></div>

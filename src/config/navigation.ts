@@ -4,7 +4,7 @@ import type { Resource } from "@/lib/permissions";
 // NAV_ITEMS in @/lib/content) — the site is a single scrolling page with anchor
 // links, not a set of separate routes, so there is no public nav config here.
 
-export type AdminNavItem = { label: string; href: string; resource: Resource };
+export type AdminNavItem = { label: string; href: string; resource: Resource; icon?: string };
 
 // `resource` maps to lib/permissions.ts so the admin layout can filter this
 // list down to what the signed-in user's role is actually allowed to see.
@@ -13,6 +13,7 @@ export const adminNavigation: AdminNavItem[] = [
   { label: "Testimonials", href: "/admin/testimonials", resource: "testimonials" },
   { label: "Enquiries", href: "/admin/enquiries", resource: "enquiries" },
   { label: "Media", href: "/admin/media", resource: "media" },
+  { label: "Landing Banner", href: "/admin/landing-banner", resource: "settings", icon: "banner" },
   { label: "Settings", href: "/admin/settings", resource: "settings" }
 ];
 // export const adminNavigation: AdminNavItem[] = [

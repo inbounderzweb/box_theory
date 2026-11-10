@@ -7,6 +7,7 @@ import { ScrollEffects } from "@/components/sections/ScrollEffects";
 import { HeroVideo } from "@/components/sections/HeroVideo";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { SITE } from "@/lib/content";
+import { getLandingBanner } from "@/services/landing-banner.service";
 
 const faqs = [
   ["What packaging services do you offer?", "We support packaging consultancy, structural and print design, sourcing, manufacturing coordination, and end-to-end project execution. We tailor the scope to your product, budget, and volumes."],
@@ -24,22 +25,27 @@ const MARQUEE_ITEMS = ["Packaging Consultancy", "Packaging Design & Development"
 
 const HERO_ALT = "Box Theory delivery truck at a warehouse dock with a branded carton and tape roll in warm light";
 
-export default function Page() {
+export default async function Page() {
+  const banner = await getLandingBanner();
   const common = { alt: HERO_ALT, fill: true, priority: true, quality: 80 } as const;
-  const { props: heroDesktop } = getImageProps({ ...common, src: "/images/hero_section/desktop_banner_img1.png", sizes: "100vw" });
-  const { props: heroMobile } = getImageProps({ ...common, src: "/images/hero_section/mobile_banner.png", sizes: "100vw" });
+  const heroDesktop = banner.desktopImage ? getImageProps({ ...common, src: banner.desktopImage.url, sizes: "100vw" }).props : null;
+  // Mobile falls back to the desktop image if only one image was uploaded.
+  const mobileSource = banner.mobileImage ?? banner.desktopImage;
+  const heroMobile = mobileSource ? getImageProps({ ...common, src: mobileSource.url, sizes: "100vw" }).props : null;
   return (
     <div className="roofer-home">
       <ScrollEffects />
       {/* Hero stays pinned while the next sections slide over it; the wrapper releases it once covered. */}
       <div className="roofer-hero-stack">
       <section className="roofer-hero" aria-labelledby="hero-title">
-        <picture>
-          <source media="(max-width: 767px)" srcSet={heroMobile.srcSet} />
-          <source media="(min-width: 768px)" srcSet={heroDesktop.srcSet} />
-          <img {...heroDesktop} alt={HERO_ALT} className="roofer-hero-image" />
-        </picture>
-        <HeroVideo />
+        {heroDesktop && (
+          <picture>
+            {heroMobile && <source media="(max-width: 767px)" srcSet={heroMobile.srcSet} />}
+            <source media="(min-width: 768px)" srcSet={heroDesktop.srcSet} />
+            <img {...heroDesktop} alt={HERO_ALT} className="roofer-hero-image" />
+          </picture>
+        )}
+        <HeroVideo desktopSrc={banner.desktopVideo?.url} mobileSrc={banner.mobileVideo?.url} />
         <div className="roofer-container roofer-hero-content">
           {/* <p className="roofer-eyebrow"><span /> PACKAGING CONSULTANCY & EXECUTION</p> */}
           <h1 id="hero-title">
@@ -85,7 +91,6 @@ export default function Page() {
       </div>
       <div>{faqs.map(([question, answer], index) => <details className="roofer-faq-item" key={question} open={index === 0}><summary>{question}<span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div></div></section>
 
-      <section className="roofer-enquiry" id="enquire"><div className="roofer-container"><div><p className="roofer-eyebrow">LET’S MAKE IT HAPPEN</p><h2>Your next great product<br />deserves great packaging.</h2><p>Tell us what you’re packaging. We’ll help you figure out what comes next.</p></div><div className="roofer-enquiry-actions"><a className="roofer-button" href={`mailto:${SITE.email}?subject=Packaging%20project%20enquiry`}>Start a Conversation <span aria-hidden="true">↗</span></a><a href={`tel:${SITE.phoneHref}`}>Or call {SITE.phone}</a></div></div></section>
     </div>
   );
 }

@@ -24,14 +24,14 @@ export type CloudinaryUploadResult = {
  */
 export async function uploadToCloudinary(
   buffer: Buffer,
-  options: { folder: string; filename?: string }
+  options: { folder: string; filename?: string; resourceType?: "image" | "video" | "auto" }
 ): Promise<CloudinaryUploadResult> {
   const result = await new Promise<import("cloudinary").UploadApiResponse>((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {
         folder: `boxtheory/${options.folder}`,
         public_id: options.filename,
-        resource_type: "auto",
+        resource_type: options.resourceType ?? "auto",
       },
       (error, uploadResult) => {
         if (error || !uploadResult) {
@@ -55,8 +55,8 @@ export async function uploadToCloudinary(
   };
 }
 
-export async function deleteFromCloudinary(publicId: string): Promise<void> {
-  await cloudinary.uploader.destroy(publicId);
+export async function deleteFromCloudinary(publicId: string, resourceType: "image" | "video" = "image"): Promise<void> {
+  await cloudinary.uploader.destroy(publicId, { resource_type: resourceType });
 }
 
 export { cloudinary };

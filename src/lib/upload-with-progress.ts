@@ -5,11 +5,12 @@ export type UploadResult<T> = { ok: true; data: T } | { ok: false; error: string
 export function uploadFileWithProgress<T>(
   url: string,
   formData: FormData,
-  onProgress: (percent: number) => void
+  onProgress: (percent: number) => void,
+  method: "POST" | "PATCH" = "POST"
 ): Promise<UploadResult<T>> {
   return new Promise((resolve) => {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
+    xhr.open(method, url);
 
     xhr.upload.onprogress = (event) => {
       if (event.lengthComputable) {
