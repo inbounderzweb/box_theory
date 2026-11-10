@@ -13,30 +13,22 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const PRESENTATION: Record<string, {
   image: string;
   alt: string;
-  category: string;
-  detail: string;
   cutout?: boolean;
   objectPosition?: string;
 }> = {
   "corrugated-boxes": {
     image: "/images/hero_section/box_png.png",
     alt: "Kraft corrugated shipping carton with Box Theory branding and packing tape",
-    category: "PROTECT & DELIVER",
-    detail: "Shipping · E-commerce · Transit",
     cutout: true,
   },
   "rigid-boxes": {
     image: "/images/industries/premium-brands.jpg",
     alt: "Kraft gift boxes with a botanical print and a black ribbon",
-    category: "PRESENT & IMPRESS",
     objectPosition: "center 85%",
-    detail: "Gifting · Premium retail",
   },
   "flexible-packaging": {
     image: "/images/industries/food-beverage.jpg",
     alt: "A coffee pouch held by a barista",
-    category: "PACK & PRESERVE",
-    detail: "Food · Personal care · Everyday essentials",
   },
 };
 
@@ -46,30 +38,6 @@ const enquiryHref = (title: string) => `mailto:${SITE.email}?subject=${encodeURI
 
 function Arrow({ className }: { className?: string }) {
   return <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg>;
-}
-
-function PlainImageCard({ index }: { index: number }) {
-  const reduceMotion = useReducedMotion();
-  return (
-    <motion.article
-      data-reveal
-      className={`${styles.card} ${styles.plainCard}`}
-      initial={{ opacity: 0, y: reduceMotion ? 0 : 34 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: reduceMotion ? 0 : 0.95, delay: reduceMotion ? 0 : index * 0.13, ease: EASE }}
-    >
-      <div className={styles.visual}>
-        <Image
-          src="/images/hero_section/box_png.png"
-          alt="Kraft corrugated shipping carton with Box Theory branding and packing tape"
-          fill
-          sizes="(max-width: 640px) calc(100vw - 40px), 90vw"
-          className={styles.plainImage}
-        />
-      </div>
-    </motion.article>
-  );
 }
 
 function ProductCard({ product, index }: { product: Solution; index: number }) {
@@ -97,8 +65,7 @@ function ProductCard({ product, index }: { product: Solution; index: number }) {
       transition={{ duration: reduceMotion ? 0 : 0.95, delay: reduceMotion ? 0 : index * 0.13, ease: EASE }}
     >
       <div className={styles.visual} onPointerMove={followPointer} onPointerLeave={() => { x.set(0); y.set(0); }}>
-        <div className={styles.cardMeta}><span>{media.category}</span><span>{String(index + 1).padStart(2, "0")}</span></div>
-        {media.cutout && <><span className={styles.orbit} aria-hidden="true" /><span className={styles.dimension} aria-hidden="true">BUILT AROUND YOUR PRODUCT</span><span className={styles.floorShadow} aria-hidden="true" /></>}
+        {media.cutout && <><span className={styles.orbit} aria-hidden="true" /><span className={styles.floorShadow} aria-hidden="true" /></>}
         <motion.div className={styles.imagePlane} style={reduceMotion ? undefined : { rotateX, rotateY, transformPerspective: 900 }}>
           <Image
             src={media.image}
@@ -109,8 +76,6 @@ function ProductCard({ product, index }: { product: Solution; index: number }) {
             style={media.objectPosition ? { objectPosition: media.objectPosition } : undefined}
           />
         </motion.div>
-        <span className={styles.visualCaption}>{media.detail}</span>
-        <span className={styles.cornerMark} aria-hidden="true">↗</span>
       </div>
       <div className={styles.cardBody}>
         <h3>{product.title}</h3>
@@ -143,7 +108,6 @@ export function FeaturedProducts() {
 
         <div className={styles.grid}>
           {products.map((product, index) => <ProductCard key={product.id} product={product} index={index} />)}
-          <PlainImageCard index={products.length} />
         </div>
 
         <div className={styles.moreFormats}>
