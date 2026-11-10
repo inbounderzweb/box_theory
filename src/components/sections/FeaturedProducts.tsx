@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
 import type { PointerEvent } from "react";
-import { SITE, SOLUTIONS } from "@/lib/content";
+import { SOLUTIONS } from "@/lib/content";
 import type { Solution } from "@/lib/types";
 import { FeaturedEnquiry } from "./FeaturedEnquiry";
 import styles from "./FeaturedProducts.module.css";
@@ -33,13 +33,6 @@ const PRESENTATION: Record<string, {
 };
 
 const products = SOLUTIONS.filter(product => PRESENTATION[product.id]);
-const otherProducts = SOLUTIONS.filter(product => !PRESENTATION[product.id]);
-const enquiryHref = (title: string) => `mailto:${SITE.email}?subject=${encodeURIComponent(`Packaging enquiry — ${title}`)}`;
-
-function Arrow({ className }: { className?: string }) {
-  return <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg>;
-}
-
 function ProductCard({ product, index }: { product: Solution; index: number }) {
   const media = PRESENTATION[product.id];
   const reduceMotion = useReducedMotion();
@@ -79,8 +72,6 @@ function ProductCard({ product, index }: { product: Solution; index: number }) {
       </div>
       <div className={styles.cardBody}>
         <h3>{product.title}</h3>
-        <p>{product.description}</p>
-        <a className={styles.productLink} href={enquiryHref(product.title)} aria-label={`Discuss this product: ${product.title}`}><span>Discuss this product</span><Arrow /></a>
       </div>
     </motion.article>
   );
@@ -110,13 +101,7 @@ export function FeaturedProducts() {
           {products.map((product, index) => <ProductCard key={product.id} product={product} index={index} />)}
         </div>
 
-        <div className={styles.moreFormats}>
-          <p>More ways to make it yours<span>Explore our packaging range</span></p>
-          <ul aria-label="More packaging products">
-            {otherProducts.map(product => <li key={product.id}><a href={enquiryHref(product.title)} aria-label={`Enquire about ${product.title}`}>{product.title}<Arrow /></a></li>)}
-          </ul>
-        </div>
-        <div className={styles.customNote}><span className={styles.noteIcon} aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3"><path d="m12 3 9 5v9l-9 5-9-5V8l9-5Zm0 10 9-5M3 8l9 5v9M7.5 5.5l9 5v4" /></svg></span><p>Your product. Your dimensions. Your brand.<span> Let’s find the right fit.</span></p><a href="#enquire">Talk to Box Theory <Arrow /></a></div>
+        <hr className={styles.divider} aria-hidden="true" />
 
         <FeaturedEnquiry />
       </div>

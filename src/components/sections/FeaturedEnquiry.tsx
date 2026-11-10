@@ -10,12 +10,6 @@ import styles from "./FeaturedEnquiry.module.css";
 const EASE = [0.22, 1, 0.36, 1] as const;
 const MAX_PDF_BYTES = 5 * 1024 * 1024;
 
-const STEPS = [
-  ["Tell us about your product", "What you make and what you need it to do."],
-  ["We talk it through", "We go over your requirements with you."],
-  ["You get a clear next step", "The right format, then samples and production."],
-] as const;
-
 // A rejected server-action call (offline, dropped connection) would otherwise throw into the page's error
 // boundary and replace the whole page; surface it as an inline message instead.
 async function submitSafely(previous: ProductEnquiryState, data: FormData): Promise<ProductEnquiryState> {
@@ -128,18 +122,6 @@ export function FeaturedEnquiry() {
         <p className={styles.eyebrow}><span aria-hidden="true" /> START A CONVERSATION</p>
         <h3 className={styles.title} id={id("title")}>Not sure which format fits? <span>Tell us what you make.</span></h3>
         <p className={styles.lede}>Share a few details, or attach your brief as a PDF. We&rsquo;ll read it and come back to you personally.</p>
-
-        <ol className={styles.steps}>
-          {STEPS.map(([title, body], index) => (
-            <li key={title}><span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><div><strong>{title}</strong><p>{body}</p></div></li>
-          ))}
-        </ol>
-
-        <div className={styles.direct}>
-          <span>PREFER TO TALK?</span>
-          <a href={`tel:${SITE.phoneHref}`}>{SITE.phone}</a>
-          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
-        </div>
       </div>
 
       <div className={styles.formSide}>

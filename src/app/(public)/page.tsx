@@ -78,7 +78,12 @@ export default function Page() {
 
       <FeaturedProducts />
 
-      <section className="roofer-section roofer-faq"><div className="roofer-container roofer-split"><div><p className="roofer-eyebrow">A LITTLE MORE CLARITY</p><h2>Good questions.<br />Straight answers.</h2><p className="roofer-intro">Every packaging project is different. Here are a few things to know before we get started.</p><a className="roofer-text-link" href={`mailto:${SITE.email}`}>Ask Us Something Else <span aria-hidden="true">↗</span></a></div><div>{faqs.map(([question, answer], index) => <details className="roofer-faq-item" key={question} open={index === 0}><summary>{question}<span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div></div></section>
+      <section className="roofer-section roofer-faq"><div className="roofer-container roofer-split"><div><p className="roofer-eyebrow">A LITTLE MORE CLARITY</p>
+      <h2>Good questions.<br />Straight answers.</h2>
+      {/* <p className="roofer-intro">Every packaging project is different. Here are a few things to know before we get started.</p>
+      <a className="roofer-text-link" href={`mailto:${SITE.email}`}>Ask Us Something Else <span aria-hidden="true">↗</span></a> */}
+      </div>
+      <div>{faqs.map(([question, answer], index) => <details className="roofer-faq-item" key={question} open={index === 0}><summary>{question}<span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div></div></section>
 
       <section className="roofer-enquiry" id="enquire"><div className="roofer-container"><div><p className="roofer-eyebrow">LET’S MAKE IT HAPPEN</p><h2>Your next great product<br />deserves great packaging.</h2><p>Tell us what you’re packaging. We’ll help you figure out what comes next.</p></div><div className="roofer-enquiry-actions"><a className="roofer-button" href={`mailto:${SITE.email}?subject=Packaging%20project%20enquiry`}>Start a Conversation <span aria-hidden="true">↗</span></a><a href={`tel:${SITE.phoneHref}`}>Or call {SITE.phone}</a></div></div></section>
     </div>
