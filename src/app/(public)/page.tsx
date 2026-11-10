@@ -43,12 +43,11 @@ export default function Page() {
         <div className="roofer-container roofer-hero-content">
           {/* <p className="roofer-eyebrow"><span /> PACKAGING CONSULTANCY & EXECUTION</p> */}
           <h1 id="hero-title">
-            <span className="roofer-hero-line"><span className="roofer-hero-word">Better</span>{" "}<span className="roofer-hero-word">packaging.</span></span><br />
-            <span className="roofer-hero-line"><span className="roofer-hero-word">From</span>{" "}<span className="roofer-hero-word">idea</span></span><br />
-            <span className="roofer-hero-line"><span className="roofer-hero-word">to</span>{" "}<span className="roofer-hero-word">delivery.</span></span>
+            <span className="roofer-hero-line"><span className="roofer-hero-word">Where</span>{" "}<span className="roofer-hero-word">Product</span>{" "}<span className="roofer-hero-word">Understanding</span></span><br />
+            <span className="roofer-hero-line"><span className="roofer-hero-word">Meets</span>{" "}<span className="roofer-hero-word">Packaging</span>{" "}<span className="roofer-hero-word">Expertise.</span></span>
           </h1>
           <p className="roofer-hero-copy">Intelligent packaging for ambitious brands. We bring design, sourcing, and manufacturing together — so you can focus on what’s inside.</p>
-          <div className="roofer-actions"><a className="roofer-button" href="#enquire">Let’s Build Your Packaging <span aria-hidden="true">↗</span></a><a className="roofer-text-link" href="#services">Explore Our Services <span aria-hidden="true">↗</span></a></div>
+          <div className="roofer-actions"><a className="roofer-button" href="#product-enquiry">Let’s Find The Right Packaging Solution! <span aria-hidden="true">↗</span></a><a className="roofer-text-link" href="#services">Explore Our Services <span aria-hidden="true">↗</span></a></div>
           <div className="roofer-hero-note"><span className="roofer-note-icon"><BoxIcon /></span><p>One partner. Every detail.<small>Serving India, GCC & international markets</small></p></div>
         </div>
         {/* <div className="roofer-hero-caption" aria-hidden="true">THOUGHTFULLY DESIGNED. EXPERTLY DELIVERED.</div> */}

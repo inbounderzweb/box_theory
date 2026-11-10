@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { SITE } from "@/lib/content";
 import styles from "./IndustriesCarousel.module.css";
 
 export type IndustryCard = { id: string; name: string; description: string; image?: string };
@@ -32,21 +31,6 @@ function Icon({ id, className }: { id: string; className?: string }) {
     </svg>
   );
 }
-
-const PRIORITIES: Record<string, string[]> = {
-  "food-beverage": ["Shelf life", "Food safety", "Shelf appeal"],
-  fmcg: ["High volumes", "Consistency", "Speed to market"],
-  cosmetics: ["Brand expression", "Premium finishes", "Product protection"],
-  "retail-ecommerce": ["Transit protection", "Unboxing", "Brand recall"],
-  apparel: ["Brand identity", "Right-sized formats", "Presentation"],
-  "consumer-products": ["Shelf presence", "Everyday use", "Online delivery"],
-  electronics: ["Impact protection", "Secure transit", "Product fit"],
-  healthcare: ["Tamper evidence", "Product integrity", "Clear labelling"],
-  "industrial-products": ["Heavy-duty strength", "Freight handling", "Bulk formats"],
-  "export-businesses": ["Transit performance", "Shipping requirements", "Protection"],
-  "premium-brands": ["First impressions", "Fine finishes", "Brand experience"],
-  "d2c-startups": ["Unboxing", "Brand identity", "Room to scale"],
-};
 
 const IMAGE_POSITION: Record<string, string> = {
   "premium-brands": "center 70%",
@@ -98,7 +82,6 @@ export function IndustriesCarousel({ cards }: { cards: IndustryCard[] }) {
   };
   const go = (offset: number) => choose(cards[(index + offset + cards.length) % cards.length].id);
   const advance = () => setActiveId(cards[(index + 1) % cards.length].id);
-  const enquiry = `mailto:${SITE.email}?subject=${encodeURIComponent(`Packaging enquiry — ${selected.name}`)}`;
 
   return (
     <section ref={sectionRef} id="industries" aria-labelledby="industries-title" className={styles.section}>
@@ -112,7 +95,7 @@ export function IndustriesCarousel({ cards }: { cards: IndustryCard[] }) {
           transition={{ duration: reduceMotion ? 0 : 0.8, ease: EASE }}
         >
           <div>
-            <p className={styles.eyebrow}><span aria-hidden="true" />INDUSTRIES SERVED</p>
+            <p className={styles.eyebrow}><span aria-hidden="true" />EVERY INDUSTRIES SERVED</p>
             <h2 id="industries-title" className={styles.title}>Industries We <span>Serve.</span></h2>
           </div>
         </motion.div>
@@ -152,7 +135,7 @@ export function IndustriesCarousel({ cards }: { cards: IndustryCard[] }) {
             </div>
           </div>
 
-          <div id="industry-preview" role="region" aria-labelledby="industry-preview-title" className={styles.preview}>
+          <div id="industry-preview" role="region" aria-label={selected.name} className={styles.preview}>
             <AnimatePresence initial={false}>
               <motion.div key={selected.id} className={styles.imageLayer} initial={{ opacity: 0, scale: reduceMotion ? 1 : 1.04 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : 0.75, ease: EASE }} aria-hidden="true">
                 {selected.image ? <Image src={selected.image} alt="" fill sizes="(max-width: 900px) calc(100vw - 40px), 55vw" unoptimized={selected.image.endsWith(".svg")} className={styles.image} style={{ objectPosition: IMAGE_POSITION[selected.id] ?? "center" }} /> : <div className={styles.imageFallback}><Icon id={selected.id} /></div>}
@@ -170,24 +153,10 @@ export function IndustriesCarousel({ cards }: { cards: IndustryCard[] }) {
                 />
               </span>
             )}
-            <div className={styles.previewTop}>
-              <span className={styles.previewBadge}><Icon id={selected.id} />TAILORED TO YOUR WORLD</span>
-              <div className={styles.previewMeta}>
-                <span className={styles.previewNumber}>{pad(index + 1)}<span> / {pad(cards.length)}</span></span>
-              </div>
-            </div>
-            <div className={styles.previewContent}>
-              <motion.div key={selected.id} initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 9 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.55, ease: EASE }}>
-                <h3 id="industry-preview-title" className={styles.previewTitle}>{selected.name}</h3>
-                <p className={styles.description}>{selected.description}</p>
-                <ul className={styles.priorities} aria-label="Packaging priorities">{(PRIORITIES[selected.id] ?? ["Product protection", "Brand presentation"]).map(priority => <li key={priority}>{priority}</li>)}</ul>
-              </motion.div>
-              <a href={enquiry} className={styles.previewLink} aria-label={`Discuss your packaging: ${selected.name}`}><span>Discuss your packaging</span><span className={styles.ctaArrow}><Arrow /></span></a>
-            </div>
           </div>
         </motion.div>
 
-        <div className={styles.footer}><a href="#enquire">Let’s find your fit<Arrow /></a></div>
+        {/* <div className={styles.footer}><a href="#enquire">Let’s find your fit<Arrow /></a></div> */}
         <p className={styles.srOnly} role="status" aria-atomic="true">{announcement}</p>
       </div>
     </section>

@@ -17,7 +17,7 @@
 .tabArea { position: relative; margin: 0 0 24px 8.5%; }
 .rail { position: absolute; top: 20px; left: 8.333%; right: 8.333%; height: 1px; background: #cfc09f; }
 .rail > span { display: block; height: 100%; background: #967644; transition: width .65s cubic-bezier(.4, 0, .2, 1); }
-.tabs { position: relative; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.tabs { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
 .tab { position: relative; display: flex; flex-direction: column; align-items: center; gap: 9px; min-width: 0; cursor: pointer; padding: 0 4px 9px; border-radius: 8px; -webkit-tap-highlight-color: transparent; }
 .stepNumber { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid #c0af8c; border-radius: 50%; background: var(--color-gold-lightest); color: #806c49; font-size: 11px; font-variant-numeric: tabular-nums; transition: background .35s, color .35s, border-color .35s, box-shadow .35s, transform .4s; }
 .tab:hover .stepNumber { transform: translateY(-3px); background: #e7dcc7; }

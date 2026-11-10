@@ -179,13 +179,13 @@ export const INDUSTRIES: Industry[] = [
   { id: "fmcg", name: "FMCG", description: "High-volume packaging programs built for speed and consistency.", image: "" },
   { id: "cosmetics", name: "Cosmetics", description: "Premium structural and print packaging for beauty and personal care.", image: "" },
   { id: "retail-ecommerce", name: "Retail & E-commerce", description: "Unboxing-ready packaging built for direct-to-customer shipping.", image: "" },
-  { id: "apparel", name: "Apparel", description: "Branded mailers and cartons sized for fashion and soft goods.", image: "" },
-  { id: "consumer-products", name: "Consumer Products", description: "Everyday products packaged for retail shelf and online alike.", image: "" },
+  { id: "Fashion", name: "Fashion", description: "Branded mailers and cartons sized for fashion and soft goods.", image: "" },
+  // { id: "consumer-products", name: "Consumer Products", description: "Everyday products packaged for retail shelf and online alike.", image: "" },
   { id: "electronics", name: "Electronics", description: "Protective, anti-static packaging engineered for sensitive components.", image: "" },
   { id: "healthcare", name: "Healthcare", description: "Compliant, tamper-evident packaging for regulated products.", image: "" },
   { id: "industrial-products", name: "Industrial Products", description: "Heavy-duty packaging built for weight, bulk, and freight handling.", image: "" },
   { id: "export-businesses", name: "Export Businesses", description: "Packaging built to meet international shipping and compliance standards.", image: "" },
-  { id: "premium-brands", name: "Premium Brands", description: "Packaging as brand experience, for products that compete on presentation.", image: "" },
+  // { id: "premium-brands", name: "Premium Brands", description: "Packaging as brand experience, for products that compete on presentation.", image: "" },
   { id: "d2c-startups", name: "D2C Startups", description: "Right-sized packaging programs for brands scaling from first batch to bulk.", image: "" },
 ];
 
@@ -198,12 +198,11 @@ export const PROCESS_HEADING = {
 } as const;
 
 export const PROCESS_STEPS: ProcessStep[] = [
-  { id: "understand", step: "01", title: "Understand", description: "We start with your product, your customer, and how the package needs to perform." },
-  { id: "strategize", step: "02", title: "Strategize", description: "Structure, material, and cost options are mapped against your goals and volumes." },
-  { id: "source", step: "03", title: "Source", description: "We match your requirement to the right manufacturing partner from our vetted network." },
-  { id: "develop", step: "04", title: "Develop", description: "Structural and print development, sampled and refined until it's production-ready." },
-  { id: "execute", step: "05", title: "Execute", description: "Production is coordinated and quality-checked on your behalf, start to finish." },
-  { id: "deliver", step: "06", title: "Deliver", description: "Packaging arrives where it needs to be, on the timeline your business runs on." },
+  { id: "understand", step: "01", title: "Understand", description: "One-on-one discussions to understand your product, packaging needs, and business requirements." },
+  { id: "strategize", step: "02", title: "Strategize", description: "Research your product category, competitor packaging, and market options." },
+  { id: "source", step: "03", title: "Source", description: "Identify suitable materials, manufacturers, and vendors." },
+  { id: "develop", step: "04", title: "Develop", description: "Develop digital prototypes tailored to the individualised research." },
+  { id: "execute", step: "05", title: "Execute", description: "Bring together designers, suppliers, and manufacturing partners, ensuring all aspects of the process work together." },
 ];
 
 /* -------------------------------------------------------------------------

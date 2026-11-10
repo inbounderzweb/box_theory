@@ -48,6 +48,30 @@ function Arrow({ className }: { className?: string }) {
   return <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg>;
 }
 
+function PlainImageCard({ index }: { index: number }) {
+  const reduceMotion = useReducedMotion();
+  return (
+    <motion.article
+      data-reveal
+      className={`${styles.card} ${styles.plainCard}`}
+      initial={{ opacity: 0, y: reduceMotion ? 0 : 34 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: reduceMotion ? 0 : 0.95, delay: reduceMotion ? 0 : index * 0.13, ease: EASE }}
+    >
+      <div className={styles.visual}>
+        <Image
+          src="/images/hero_section/box_png.png"
+          alt="Kraft corrugated shipping carton with Box Theory branding and packing tape"
+          fill
+          sizes="(max-width: 640px) calc(100vw - 40px), 90vw"
+          className={styles.plainImage}
+        />
+      </div>
+    </motion.article>
+  );
+}
+
 function ProductCard({ product, index }: { product: Solution; index: number }) {
   const media = PRESENTATION[product.id];
   const reduceMotion = useReducedMotion();
@@ -115,14 +139,11 @@ export function FeaturedProducts() {
             <p className={styles.eyebrow}><span aria-hidden="true" /> FEATURED PRODUCTS</p>
             <h2 id="featured-products-title">Great things come<br />in <span>thoughtful packaging.</span></h2>
           </div>
-          <div className={styles.headingAside}>
-            <p>From the first impression to the final delivery. Find the right format for what you make.</p>
-            <a href="#enquire">Find your packaging <Arrow /></a>
-          </div>
         </motion.div>
 
         <div className={styles.grid}>
           {products.map((product, index) => <ProductCard key={product.id} product={product} index={index} />)}
+          <PlainImageCard index={products.length} />
         </div>
 
         <div className={styles.moreFormats}>

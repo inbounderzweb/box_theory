@@ -24,6 +24,9 @@
 .card:hover .cornerMark, .card:focus-within .cornerMark { rotate: 45deg; background: var(--color-gold-light); }
 .heroCard .visual { background: radial-gradient(ellipse at 48% 40%, #fff9e9 0, #f1e8d7 55%, #e6dac5 100%); }
 .heroCard .imagePlane { inset: 58px 10px 36px; }
+.plainCard { grid-column: 1 / -1; }
+.plainCard .visual { height: clamp(260px, 26vw, 360px); background: radial-gradient(ellipse at 48% 40%, #fff9e9 0, #f1e8d7 55%, #e6dac5 100%); }
+.plainImage { object-fit: contain; padding: 18px; filter: drop-shadow(0 20px 16px #65472429); }
 .cutout { object-fit: contain; padding: 14px; filter: drop-shadow(0 20px 16px #65472429); transform: translateY(0) rotate(-7deg) scale(.95); transition: transform 1.15s cubic-bezier(.22, 1, .36, 1), filter 1.15s; }
 .heroCard:hover .cutout, .heroCard:focus-within .cutout { transform: translateY(-10px) rotate(-2deg) scale(1.03); filter: drop-shadow(0 30px 20px #65472435); }
 .orbit { position: absolute; width: 70%; aspect-ratio: 1; border: 1px dashed #b99a6050; border-radius: 50%; left: 15%; top: 17%; transform: rotateX(52deg) rotateZ(-22deg); pointer-events: none; }
@@ -119,3 +122,4 @@
 @media (hover: none), (prefers-reduced-motion: reduce) {
   .card:hover, .customNote:hover { transform: none; }
 }
+@media (max-width: 640px) { .plainCard { grid-column: auto; } .plainCard .visual { height: auto; aspect-ratio: 1.1; } }

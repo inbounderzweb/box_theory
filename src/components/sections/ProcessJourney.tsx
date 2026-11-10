@@ -8,15 +8,7 @@ import styles from "./ProcessJourney.module.css";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 // Centre of each stage in the original carton illustration.
-const STAGE_X = [15.7, 30, 43.9, 58.2, 72.7, 87.3];
-const DESCRIPTIONS = [
-  "Understand your product, market, logistics and packaging requirements.",
-  "Build a packaging strategy around cost, protection, presentation and scalability.",
-  "Identify suitable materials, suppliers and manufacturing partners.",
-  "Move from concept to prototypes, samples and production-ready packaging.",
-  "Coordinate manufacturing, printing, quality control and delivery.",
-  "Deliver packaging that is ready for your operation and your customer.",
-];
+const STAGE_X = [15.7, 30, 43.9, 58.2, 80];
 
 function Arrow({ next = false }: { next?: boolean }) {
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={next ? "M5 12h14m-5-5 5 5-5 5" : "M6 18 18 6M6 6h12v12"} /></svg>;
@@ -60,12 +52,14 @@ export function ProcessJourney() {
         >
           <div>
             <p className={styles.eyebrow}><span aria-hidden="true" />OPERATING PROCESS</p>
-            <h2 id="process-title" className={styles.title}>From Your First Idea to<br /><span>Your Next Milestone.</span></h2>
+            <h2 id="process-title" className={styles.title}>Boxing It , 
+              {/* <br /> */}
+            <span> Step by Step.</span></h2>
           </div>
-          <div className={styles.intro}>
+          {/* <div className={styles.intro}>
             <p>A streamlined process to bring your packaging vision to life.</p>
             <span className={styles.stepCount}><span>06</span> connected steps. One packaging partner.</span>
-          </div>
+          </div> */}
         </motion.div>
 
         <motion.div
@@ -80,7 +74,7 @@ export function ProcessJourney() {
             <span className={styles.stageGlow} aria-hidden="true" />
             <Image
               src="/images/process/process_desktop.webp"
-              alt="Six packaging stages connected by a gold ribbon: planning, materials, sourcing, prototypes, production and delivery"
+              alt="Packaging stages connected by a gold ribbon: planning, research, materials, prototypes, production and delivery"
               width={2170}
               height={386}
               sizes="(max-width: 640px) 1000px, (max-width: 1200px) 90vw, 1120px"
@@ -120,13 +114,13 @@ export function ProcessJourney() {
               <div key={step.id} role="tabpanel" id={`process-panel-${step.id}`} aria-labelledby={`process-tab-${step.id}`} hidden={active !== index} tabIndex={0} className={styles.panel}>
                 {active === index && <motion.div key={step.id} className={styles.panelContent} initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.45, ease: EASE }}>
                   <span className={styles.panelNumber} aria-hidden="true">{step.step}</span>
-                  <div className={styles.panelCopy}><h3>{step.title}</h3><p>{DESCRIPTIONS[index]}</p></div>
+                  <div className={styles.panelCopy}><h3>{step.title}</h3><p>{step.description}</p></div>
                   {index < PROCESS_STEPS.length - 1 ? <button type="button" onClick={() => selectStep(index + 1)} className={styles.nextStep}>Next step<Arrow next /></button> : <a href="#enquire" className={styles.nextStep}>Start your project<Arrow /></a>}
                 </motion.div>}
               </div>
             ))}
           </div>
-          <p className={styles.hint}><span aria-hidden="true">↳</span> Select a step to explore the journey.</p>
+          {/* <p className={styles.hint}><span aria-hidden="true">↳</span> Select a step to explore the journey.</p> */}
         </motion.div>
       </div>
     </section>
