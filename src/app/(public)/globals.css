@@ -683,3 +683,10 @@
 @media (min-width: 768px) {
   .roofer-home .roofer-hero, .roofer-home .roofer-hero > .roofer-container.roofer-hero-content { min-height: calc(100vh - 58px); min-height: calc(100svh - 58px); }
 }
+
+/* Laptop and desktop: CTAs and note sit in the bottom-right corner of the hero (mobile layout is unchanged). */
+@media (min-width: 768px) {
+  .roofer-home .roofer-hero > .roofer-container.roofer-hero-content { display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; text-align: right; }
+  .roofer-hero .roofer-actions { justify-content: flex-end; }
+  .roofer-hero-note { flex-direction: row-reverse; text-align: right; }
+}
