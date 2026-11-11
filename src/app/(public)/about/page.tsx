@@ -2,16 +2,23 @@ import type { Metadata } from "next";
 import Image, { getImageProps } from "next/image";
 import Link from "next/link";
 import { CountUp } from "@/components/common/CountUp";
+import { PurposeTabs } from "@/components/sections/PurposeTabs";
 import { AboutCarton } from "@/components/sections/AboutCarton";
 import { ABOUT_PAGE, INDUSTRIES, PROCESS_STEPS } from "@/lib/content";
 
 export const metadata: Metadata = { title: "About" };
 
+// const FEATURES = [
+//   { label: "Strategic Consultancy", path: "M12 3 4 6v6c0 4.5 3.2 7.6 8 9 4.8-1.4 8-4.5 8-9V6l-8-3Zm-3.5 9 2.5 2.5 4.5-5" },
+//   { label: "Sourcing Expertise", path: "M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm5 12 5 5" },
+//   { label: "Custom Solutions", path: "m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Zm0 9 8-4.5M12 12v9M12 12 4 7.5" },
+//   { label: "Execution Partners", path: "M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-6 9c0-3.3 2.7-6 6-6s6 2.7 6 6M17 11a2.5 2.5 0 1 0 0-5M21 19c0-2.4-1.5-4.4-3.6-5.2" },
+// ] as const;
 const FEATURES = [
-  { label: "Strategic Consultancy", path: "M12 3 4 6v6c0 4.5 3.2 7.6 8 9 4.8-1.4 8-4.5 8-9V6l-8-3Zm-3.5 9 2.5 2.5 4.5-5" },
-  { label: "Sourcing Expertise", path: "M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm5 12 5 5" },
-  { label: "Custom Solutions", path: "m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Zm0 9 8-4.5M12 12v9M12 12 4 7.5" },
-  { label: "Execution Partners", path: "M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-6 9c0-3.3 2.7-6 6-6s6 2.7 6 6M17 11a2.5 2.5 0 1 0 0-5M21 19c0-2.4-1.5-4.4-3.6-5.2" },
+  { label: "Packaging Consultancy", path: "M12 3 4 6v6c0 4.5 3.2 7.6 8 9 4.8-1.4 8-4.5 8-9V6l-8-3Zm-3.5 9 2.5 2.5 4.5-5" },
+  { label: "Product Research", path: "M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm5 12 5 5" },
+  { label: "Customised Solutions ", path: "m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Zm0 9 8-4.5M12 12v9M12 12 4 7.5" },
+  { label: "End-to-End Coordination ", path: "M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-6 9c0-3.3 2.7-6 6-6s6 2.7 6 6M17 11a2.5 2.5 0 1 0 0-5M21 19c0-2.4-1.5-4.4-3.6-5.2" },
 ] as const;
 
 const QUALITY_POINTS = [
@@ -42,7 +49,7 @@ export default function Page() {
           <div>
             <p className="mb-5 text-[12px] font-semibold uppercase tracking-[.3em] text-gold-medium">About Us</p>
             <h1 id="about-title" className="font-display text-[clamp(34px,5vw,60px)] font-semibold leading-[1.08] tracking-[-.03em]">
-              Bridging Brands<br />&amp; Manufacturing
+              Packaging Consultancy<br />  Built Around Your Product
             </h1>
             <p className="mt-6 max-w-xl text-[16px] leading-[1.8] text-cocoa-light md:text-[18px]">{ABOUT_PAGE.intro}</p>
 
@@ -79,28 +86,19 @@ export default function Page() {
       </nav>
 
       <section aria-labelledby="story-title" className="py-16 md:py-24">
-        <div className="roofer-container grid items-center gap-10 md:gap-14 lg:grid-cols-2">
-          {/* Layered photo stack: the front photo overlaps two receding ones. */}
-          <div className="relative mx-auto aspect-[5/4] w-full max-w-[640px] lg:max-w-none">
-            {STACK.map(card => (
-              <div key={card.src} className={`absolute overflow-hidden rounded-lg border-[6px] border-white bg-gold-lightest shadow-[0_22px_44px_-16px_rgb(74_56_49/0.45)] ${card.box}`} style={{ zIndex: card.z }}>
-                <Image src={card.src} alt={card.alt} fill sizes="(max-width: 1024px) 80vw, 40vw" className="object-cover" />
-              </div>
-            ))}
-          </div>
-          <div>
-            <p className="mb-4 text-[12px] font-semibold uppercase tracking-[.3em] text-gold-medium">Our Story</p>
-            <h2 id="story-title" className="font-display text-[clamp(30px,4vw,48px)] font-semibold leading-[1.1] tracking-[-.03em]">Built on Purpose</h2>
-            <p className="mt-5 text-[16px] leading-[1.8] text-cocoa-light md:text-[18px]">{ABOUT_PAGE.mission}</p>
-            <ul className="mt-8 grid gap-x-8 gap-y-3 sm:grid-cols-2">
-              {ABOUT_PAGE.strengths.map(item => (
-                <li key={item} className="flex items-start gap-3 text-[15px]">
-                  <span aria-hidden="true" className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-gold-light text-[11px] text-cocoa-umber">✓</span>{item}
-                </li>
+        <PurposeTabs
+          items={[ABOUT_PAGE.vision, ABOUT_PAGE.mission]}
+          media={
+            // Layered photo stack: the front photo overlaps two receding ones.
+            <div className="relative mx-auto aspect-[5/4] w-full max-w-[640px] lg:max-w-none">
+              {STACK.map(card => (
+                <div key={card.src} className={`absolute overflow-hidden rounded-lg border-[6px] border-white bg-gold-lightest shadow-[0_22px_44px_-16px_rgb(74_56_49/0.45)] ${card.box}`} style={{ zIndex: card.z }}>
+                  <Image src={card.src} alt={card.alt} fill sizes="(max-width: 1024px) 80vw, 40vw" className="object-cover" />
+                </div>
               ))}
-            </ul>
-          </div>
-        </div>
+            </div>
+          }
+        />
       </section>
 
       <section aria-labelledby="advantages-title" className="pb-16 md:pb-24">
@@ -113,7 +111,7 @@ export default function Page() {
             <Image src="/images/hero_section/desktop_banner_img1.png" alt="" fill sizes="100vw" className="object-cover" />
             <div className="absolute inset-0 bg-cocoa-umber/80" />
           </div>
-          <div className="roofer-container relative py-14 text-center text-gold-lightest md:py-20">
+          {/* <div className="roofer-container relative py-14 text-center text-gold-lightest md:py-20">
             <p className="mb-10 text-lg font-semibold tracking-wide md:mb-14 md:text-xl">Real Numbers, Real Packaging</p>
             <dl className="grid gap-10 sm:grid-cols-3 sm:gap-6">
               {STATS.map(stat => (
@@ -125,7 +123,7 @@ export default function Page() {
                 </div>
               ))}
             </dl>
-          </div>
+          </div> */}
         </div>
       </section>
       <section aria-labelledby="quality-title" className="pb-16 md:pb-24">
@@ -151,10 +149,11 @@ export default function Page() {
           <div>
             <p className="mb-4 text-[12px] font-semibold uppercase tracking-[.3em] text-gold-medium">About Us</p>
             <h2 id="quality-title" className="font-display text-[clamp(30px,4vw,48px)] font-semibold leading-[1.1] tracking-[-.03em]">
-              We Provide Packaging Solutions <span className="text-cocoa-light">Focused On Quality</span>
+             We Bring Every Piece of <span className="text-cocoa-light">Packaging Together.</span>
             </h2>
             <p className="mt-5 max-w-xl text-[16px] leading-[1.8] text-cocoa-light md:text-[17px]">
-              From the first sketch to the final pallet, we handle design, sourcing and manufacturing so your product arrives protected and on brand. One team, clear timelines, and packaging built around your budget.
+              The right packaging involves more than a design. It takes research, material selection, vendor expertise, and careful coordination. We bring these together under one roof, making the entire process simpler for your business.
+
             </p>
             <Link href="/services" className="mt-8 inline-flex items-center gap-3 rounded-md bg-cocoa-umber px-7 py-3.5 text-[15px] font-medium text-gold-lightest transition hover:bg-cocoa-light">
               Read More <span aria-hidden="true">→</span>

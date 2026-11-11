@@ -239,17 +239,17 @@ export const ABOUT_PAGE = {
   eyebrow: "About Box Theory",
   heading: "Bridging Brands & Manufacturing",
   intro:
-    "Box Theory is a modern packaging consultancy, sourcing, and project execution company that bridges the gap between brands and manufacturing partners.",
-  mission:
-    "To simplify packaging development and manufacturing through strategic consultancy, strong vendor partnerships, operational coordination, and customer-focused execution.",
-  strengths: [
-    "Strategic packaging consultancy",
-    "Strong vendor partnerships",
-    "Operational coordination",
-    "Customer-focused execution",
-    "Manufacturing coordination",
-    "Sourcing expertise",
-  ],
+    "Our consultancy principles and practises hinges on research, advise, and we work closely with you to develop customised strategies for your product.",
+  vision: {
+    label: "Our Vision",
+    title: "Making Packaging a Priority, Not an Afterthought",
+    text: "To make packaging a strategic part of every product by bringing together research, market understanding, and distinctive design.",
+  },
+  mission: {
+    label: "Our Mission",
+    title: "Thinking Beyond the Box",
+    text: "To simplify packaging through expert consultancy, customised solutions and end-to-end coordination, making BoxTheory a one-stop packaging partner for businesses.",
+  },
   image: "/images/about-split.svg",
   imageAlt: "Abstract composition representing packaging materials and structure",
 } as const;

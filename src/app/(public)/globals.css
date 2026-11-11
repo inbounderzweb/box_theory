@@ -690,3 +690,11 @@
   .roofer-hero .roofer-actions { justify-content: flex-end; }
   .roofer-hero-note { flex-direction: row-reverse; text-align: right; }
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  [class*="animate-[fadeIn"] { animation: none !important; }
+}
