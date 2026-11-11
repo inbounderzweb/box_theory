@@ -102,9 +102,9 @@ export default function Page() {
       </section>
 
       <section aria-labelledby="advantages-title" className="pb-16 md:pb-24">
-        <h2 id="advantages-title" className="roofer-container pb-8 text-center text-[15px] font-semibold tracking-wide md:pb-10">
+        {/* <h2 id="advantages-title" className="roofer-container pb-8 text-center text-[15px] font-semibold tracking-wide md:pb-10">
           Our Advantages <span className="font-normal text-cocoa-light">/ By the Numbers</span>
-        </h2>
+        </h2> */}
         {/* The photo is fixed to the viewport and revealed through this band, so it stays put while the page scrolls. */}
         <div className="relative [clip-path:inset(0)]">
           <div aria-hidden="true" className="fixed inset-0 -z-0 h-svh">
