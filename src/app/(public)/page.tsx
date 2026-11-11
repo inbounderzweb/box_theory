@@ -84,8 +84,8 @@ export default async function Page() {
 
       <FeaturedProducts />
 
-      <section className="roofer-section roofer-faq"><div className="roofer-container roofer-split"><div><p className="roofer-eyebrow">A LITTLE MORE CLARITY</p>
-      <h2>Good questions.<br />Straight answers.</h2>
+      <section className="roofer-section roofer-faq"><div className="roofer-container roofer-split"><div><p className="roofer-eyebrow">FAQs</p>
+      <h2>No Questions <br />Left Unboxed.</h2>
       {/* <p className="roofer-intro">Every packaging project is different. Here are a few things to know before we get started.</p>
       <a className="roofer-text-link" href={`mailto:${SITE.email}`}>Ask Us Something Else <span aria-hidden="true">↗</span></a> */}
       </div>

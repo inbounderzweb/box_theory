@@ -77,10 +77,10 @@ export function WhyChooseUs() {
             <span aria-hidden="true" className="h-px w-16 bg-[#d4b06c]/80 md:w-[72px]" />
           </motion.p>
           <motion.h2 {...rise(0.1)} id="why-choose-title" className="max-w-[780px] font-display text-[clamp(24px,3vw,42px)] font-semibold leading-[1.25] tracking-[-.02em]">
-            Thinking outside the <span className="text-[#d4b06c]">Box </span> 
-                from product research to prototyping and delivery, we bring every packaging detail together.
-
+            Thinking Outside the <span className="text-[#d4b06c]">Box </span> 
           </motion.h2>
+          <p>
+                from product research to prototyping and delivery, we bring every packaging detail together.</p>
 
           <ul className="mt-9 grid gap-3.5 min-[640px]:grid-cols-2 lg:grid-cols-3 lg:gap-[18px] md:mt-11">
             {FEATURES.map((item, index) => (

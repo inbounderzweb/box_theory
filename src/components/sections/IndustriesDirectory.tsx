@@ -113,7 +113,7 @@ export function IndustriesDirectory() {
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: reduceMotion ? 0 : 0.8, ease: EASE }}
           >
-            <p className={styles.eyebrow}><span aria-hidden="true" /> CUSTOM CORRUGATED PACKAGING</p>
+            <p className={styles.eyebrow}><span aria-hidden="true" /> CUSTOM SOLUTIONS</p>
             <h2 id="industries-directory-title" className={styles.title}>Before They See What's Inside,<span>They See the Box.</span></h2>
             <p className={styles.lead}>How often have you picked up a product because its packaging caught your eye, on a store shelf or while scrolling online? That's the power of a first impression.</p>
             {/* <p className={styles.supporting}>From sourcing to manufacturing coordination, we bring your requirements and the right production partners together.</p> */}
