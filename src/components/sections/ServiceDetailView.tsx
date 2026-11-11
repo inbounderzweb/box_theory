@@ -56,7 +56,6 @@ export function ServiceDetailView({ service, bannerTitle, crumbs }: { service: S
             <div>
               <h2 id="desc-title" className={H3}>Description</h2>
               <p className="mt-6 text-[16px] leading-[1.85] text-cocoa-light">{service.heroDescription}</p>
-              <p className="mt-4 text-[15px] leading-[1.85] text-cocoa-light">{service.shortDescription}</p>
             </div>
             <div className="relative mx-auto aspect-[4/3] w-full max-w-[360px] overflow-hidden rounded-xl md:max-w-none">
               <Image src="/images/industries/retail-ecommerce.jpg" alt="" fill sizes="(max-width: 768px) 80vw, 28vw" className="object-cover" />

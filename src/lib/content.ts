@@ -379,66 +379,56 @@ export const SERVICES: ServiceDetail[] = [
   {
     slug: "packaging-consultancy",
     title: "Packaging Consultancy",
-    shortDescription: "Strategic guidance on packaging structure, materials, and cost.",
+    shortDescription:
+      "We help you make informed packaging decisions through expert consultation, understanding your products and business objectives to recommend the right packaging approach.",
     heroDescription:
-      "Before a single unit goes into production, we help you understand what your packaging actually needs to do — for your product, your margins, and your customer's unboxing experience.",
+      "We help you make informed packaging decisions through expert consultation, understanding your products and business objectives to recommend the right packaging approach.",
     whatItIncludes: [
-      "Structural and material assessment",
-      "Cost-versus-performance analysis",
-      "Category and competitor benchmarking",
-      "Packaging strategy roadmap",
+      "Product Requirement Assessment",
+      "Packaging Strategy & Recommendations",
+      "Material & Design Consultation",
+      "Cost & Feasibility Assessment",
     ],
   },
   {
-    slug: "design-development",
-    title: "Packaging Design & Development",
-    shortDescription: "From concept to production-ready file.",
+    slug: "research-development-prototyping",
+    title: "Research, Product Development & Prototyping",
+    shortDescription:
+      "We take packaging ideas from research to tangible concepts, exploring possibilities and developing solutions.",
     heroDescription:
-      "Structural and print design built around how your product actually ships — developed and sampled until it's genuinely production-ready, not just presentation-ready.",
+      "We take packaging ideas from research to tangible concepts, exploring possibilities and developing solutions.",
     whatItIncludes: [
-      "Structural design and die-line development",
-      "Print and finish design",
-      "Physical prototyping and sampling",
-      "Production-file handoff",
+      "Product & Competitor Research",
+      "Packaging Concept Development",
+      "Custom Design & Structural Development",
+      "Digital & Physical Prototyping",
     ],
   },
   {
-    slug: "manufacturing-coordination",
-    title: "Manufacturing Coordination",
-    shortDescription: "Vendor selection, quality control, and timelines — managed for you.",
+    slug: "vendor-selection-coordination",
+    title: "Vendor Selection & Coordination",
+    shortDescription:
+      "We identify suitable vendors and coordinate with them to ensure your packaging requirements are understood and met.",
     heroDescription:
-      "We sit between you and the factory floor, managing vendor selection, production schedules, and quality control so packaging stays on track without becoming your job.",
+      "We identify suitable vendors and coordinate with them to ensure your packaging requirements are understood and met.",
     whatItIncludes: [
-      "Vendor selection and negotiation",
-      "Production timeline management",
-      "In-process and pre-dispatch quality checks",
-      "Issue resolution and revisions",
+      "Vendor Identification & Evaluation",
+      "Manufacturer Selection",
+      "Quotation & Cost Comparison",
+      "Vendor Communication & Coordination",
     ],
   },
   {
-    slug: "packaging-sourcing",
-    title: "Packaging Sourcing",
-    shortDescription: "Access to a vetted manufacturing network.",
+    slug: "end-to-end-packaging-coordination",
+    title: "End-to-End Packaging Coordination",
+    shortDescription:
+      "We oversee the packaging journey, bringing materials, production, design, and marketing requirements together through a single point of contact.",
     heroDescription:
-      "A vetted network of manufacturing partners, matched to your volume, material, and budget — so you're not starting a vendor search from zero every time.",
+      "We oversee the packaging journey, bringing materials, production, design, and marketing requirements together through a single point of contact.",
     whatItIncludes: [
-      "Manufacturer matching by product and volume",
-      "Material and cost comparisons",
-      "Sample coordination across vendors",
-      "Ongoing sourcing relationship management",
-    ],
-  },
-  {
-    slug: "b2b-packaging",
-    title: "B2B Packaging Solutions",
-    shortDescription: "Scalable packaging programs for growing businesses.",
-    heroDescription:
-      "Packaging programs built to scale — for growing brands, retailers, and export businesses that need consistency across repeat, high-volume orders.",
-    whatItIncludes: [
-      "Volume-based packaging programs",
-      "Multi-location and multi-SKU coordination",
-      "Export-compliant packaging specification",
-      "Dedicated account support",
+      "Material Procurement & Sourcing",
+      "Production Planning & Tracking",
+      "Design & Marketing Alignment",
     ],
   },
 ];
