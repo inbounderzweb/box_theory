@@ -77,7 +77,9 @@ export function WhyChooseUs() {
             <span aria-hidden="true" className="h-px w-16 bg-[#d4b06c]/80 md:w-[72px]" />
           </motion.p>
           <motion.h2 {...rise(0.1)} id="why-choose-title" className="max-w-[780px] font-display text-[clamp(24px,3vw,42px)] font-semibold leading-[1.25] tracking-[-.02em]">
-            Our proprietary <span className="text-[#d4b06c]">GIAN technology</span> combines intelligent safety, power protection, and energy efficiency for smarter, smoother lift performance.
+            Thinking outside the <span className="text-[#d4b06c]">Box </span> 
+                from product research to prototyping and delivery, we bring every packaging detail together.
+
           </motion.h2>
 
           <ul className="mt-9 grid gap-3.5 min-[640px]:grid-cols-2 lg:grid-cols-3 lg:gap-[18px] md:mt-11">

@@ -198,11 +198,11 @@ export const PROCESS_HEADING = {
 } as const;
 
 export const PROCESS_STEPS: ProcessStep[] = [
-  { id: "understand", step: "01", title: "Understand", description: "One-on-one discussions to understand your product, packaging needs, and business requirements." },
-  { id: "strategize", step: "02", title: "Strategize", description: "Research your product category, competitor packaging, and market options." },
-  { id: "source", step: "03", title: "Source", description: "Identify suitable materials, manufacturers, and vendors." },
-  { id: "develop", step: "04", title: "Develop", description: "Develop digital prototypes tailored to the individualised research." },
-  { id: "execute", step: "05", title: "Execute", description: "Bring together designers, suppliers, and manufacturing partners, ensuring all aspects of the process work together." },
+  { id: "Connect", step: "01", title: "Connect", description: "One-on-one discussions to understand your product, packaging needs, and business requirements." },
+  { id: "Investigate", step: "02", title: "Investigate", description: "Research your product category, competitor packaging, and market options." },
+  { id: "Conceptualise", step: "03", title: "Conceptualise", description: "Identify suitable materials, manufacturers, and vendors." },
+  { id: "Source", step: "04", title: "Source", description: "Develop digital prototypes tailored to the individualised research." },
+  { id: "Coordinate", step: "05", title: "Coordinate", description: "Bring together designers, suppliers, and manufacturing partners, ensuring all aspects of the process work together." },
 ];
 
 /* -------------------------------------------------------------------------
